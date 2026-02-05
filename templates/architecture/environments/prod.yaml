@@ -1,0 +1,65 @@
+# Production Environment Configuration
+# This defines production-specific settings
+
+name: prod
+description: Production environment
+
+# Availability requirements
+availability:
+  replicas: 3
+  min_replicas: 2
+  max_replicas: 20
+  multi_az: true
+  regions:
+    - us-east-1
+    - us-west-2  # DR region
+
+# Database configuration
+database:
+  instance_class: db.r6g.xlarge
+  storage_type: io1
+  iops: 10000
+  multi_az: true
+  read_replicas: 2
+  backups:
+    enabled: true
+    retention_days: 35
+    window: "03:00-04:00"
+
+# Security settings
+security:
+  strict: true
+  encryption_at_rest: required
+  encryption_in_transit: required
+  network:
+    private_only: true
+    vpc_endpoints: true
+  waf:
+    enabled: true
+    rules:
+      - rate_limiting
+      - sql_injection
+      - xss_protection
+
+# Scaling configuration
+scaling:
+  target_cpu_percent: 70
+  target_memory_percent: 80
+  scale_in_cooldown: 300
+  scale_out_cooldown: 60
+
+# Disaster recovery
+disaster_recovery:
+  rto_hours: 4
+  rpo_hours: 1
+  backup_frequency: hourly
+  cross_region_replication: true
+
+# Cost management
+cost:
+  budget_monthly_usd: 50000
+  alert_thresholds:
+    - 50
+    - 80
+    - 100
+  reserved_capacity: true

@@ -1,0 +1,62 @@
+# SLO Framework Configuration
+# Defines Service Level Objectives and Error Budgets
+
+slo_framework:
+  version: "1.0"
+  window_default: 30d
+
+# Standard SLO profiles
+profiles:
+  tier1_critical:
+    description: Mission-critical services (payments, auth)
+    availability:
+      target: 99.99
+      error_budget_minutes_per_month: 4.3
+    latency:
+      p50_ms: 50
+      p95_ms: 150
+      p99_ms: 300
+    error_rate:
+      target_percent: 0.01
+
+  tier2_standard:
+    description: Standard business services
+    availability:
+      target: 99.9
+      error_budget_minutes_per_month: 43.2
+    latency:
+      p50_ms: 100
+      p95_ms: 300
+      p99_ms: 500
+    error_rate:
+      target_percent: 0.1
+
+  tier3_internal:
+    description: Internal/admin services
+    availability:
+      target: 99.5
+      error_budget_minutes_per_month: 216
+    latency:
+      p50_ms: 200
+      p95_ms: 500
+      p99_ms: 1000
+    error_rate:
+      target_percent: 0.5
+
+# Alerting on error budget consumption
+alerting:
+  burn_rate_alerts:
+    - name: fast_burn
+      threshold_percent: 2
+      window: 1h
+      severity: critical
+    - name: slow_burn
+      threshold_percent: 10
+      window: 6h
+      severity: warning
+
+# Error budget policies
+policies:
+  freeze_deployments_at: 25  # Freeze when <25% budget remaining
+  review_required_at: 50     # Reviews when <50% budget remaining
+  auto_rollback: true        # Auto rollback if SLO violated

@@ -1,0 +1,41 @@
+# System Configuration - Global architectural defaults
+# This file anchors all architectural decisions
+
+system:
+  name: my-platform
+  description: Enterprise microservices platform
+
+  # Architecture fundamentals
+  architecture_style: microservices
+  cloud: aws
+  region: us-east-1
+
+  # Default runtime for new services
+  runtime_default: node20
+  container_platform: ecs-fargate
+
+  # Kubernetes configuration
+  kubernetes:
+    cluster_version: "1.29"
+    node_type: m6i.large
+    min_nodes: 3
+    max_nodes: 20
+
+  # Service mesh
+  mesh:
+    provider: istio
+    version: "1.20"
+    mtls_mode: STRICT
+
+  # Enterprise standards
+  standards:
+    twelve_factor: required
+    well_architected: required
+    dora_metrics: required
+
+  # Compliance frameworks
+  compliance:
+    - soc2
+    - gdpr
+    # - hipaa  # Uncomment if handling healthcare data
+    # - pci    # Uncomment if handling payment data

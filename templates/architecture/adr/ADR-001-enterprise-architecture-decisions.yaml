@@ -1,0 +1,144 @@
+# ADR-001: Enterprise Architecture Technology Decisions
+# Status: Accepted
+# Date: 2026-02-05
+
+adr_id: ADR-001
+title: Enterprise Architecture Technology Decisions
+status: accepted
+date: 2026-02-05
+deciders:
+  - architecture-team
+
+# Context
+context: |
+  We are building an Architecture MCP (Model Context Protocol) server to act as
+  the architectural brain for AI-driven engineering. The system needs to support
+  enterprise-grade systems at Netflix/Uber/Instagram scale with proper
+  observability, CI/CD, security, compliance, and resilience.
+
+  Key requirements:
+  - Support 10+ microservices
+  - Multiple environments (local, dev, staging, prod)
+  - Multi-region disaster recovery
+  - Compliance with SOC2, HIPAA, PCI-DSS, GDPR
+  - SLOs with 99.9%+ availability
+  - <100ms response time for MCP queries
+
+# Decisions
+decisions:
+  - id: DEC-001
+    area: cloud_provider
+    decision: AWS as primary cloud
+    because:
+      - Most enterprise adoption (Netflix, Uber use AWS)
+      - Richest ecosystem for enterprise services
+      - Best Kubernetes support via EKS
+      - Strong compliance certifications
+    consequences:
+      - AWS-specific integrations initially
+      - May need abstraction layer for multi-cloud later
+    reconsider_if:
+      - Major client requires GCP/Azure exclusively
+      - AWS pricing becomes non-competitive
+
+  - id: DEC-002
+    area: service_mesh
+    decision: Istio as service mesh
+    because:
+      - Feature-rich (traffic management, security, observability)
+      - Netflix uses it for 100B requests/day
+      - Strong mTLS support
+      - Canary/blue-green deployment support
+    consequences:
+      - Higher resource consumption than Linkerd
+      - Steeper learning curve
+    alternatives_rejected:
+      - Linkerd: Lighter but fewer features
+      - Consul Connect: Less Kubernetes-native
+    reconsider_if:
+      - Resource constraints become critical
+      - Team expertise shifts to Linkerd
+
+  - id: DEC-003
+    area: event_platform
+    decision: AWS EventBridge + MSK (Managed Kafka)
+    because:
+      - EventBridge for AWS service integration
+      - MSK for high-throughput event streaming
+      - Kafka compatibility for portability
+      - Managed services reduce operational burden
+    consequences:
+      - AWS-native but Kafka-compatible
+      - MSK cost at scale
+    reconsider_if:
+      - Multi-cloud requirement emerges
+      - Throughput exceeds MSK limits
+
+  - id: DEC-004
+    area: compliance
+    decision: Full enterprise compliance pack (SOC2, HIPAA, PCI-DSS, GDPR, ISO 27001)
+    because:
+      - Maximum market flexibility
+      - Healthcare and fintech opportunities
+      - EU market access via GDPR
+      - Enterprise sales requirements
+    consequences:
+      - Higher initial compliance overhead
+      - Audit requirements for each framework
+    reconsider_if:
+      - Never serving healthcare or payments
+      - Never serving EU customers
+
+  - id: DEC-005
+    area: resilience_patterns
+    decision: Mandatory resilience patterns for all production services
+    because:
+      - Netflix Hystrix patterns proven at scale
+      - Prevents cascading failures
+      - Enables graceful degradation
+    patterns_required:
+      - circuit_breaker
+      - retry_with_backoff
+      - timeout_hierarchies
+      - bulkhead_isolation
+      - fallback_strategies
+    consequences:
+      - More complex service configuration
+      - Requires monitoring of resilience metrics
+    reconsider_if:
+      - Never (this is non-negotiable for enterprise)
+
+  - id: DEC-006
+    area: observability
+    decision: OpenTelemetry with SLO framework
+    because:
+      - Industry standard for instrumentation
+      - Vendor-neutral data format
+      - SLOs enable data-driven reliability decisions
+    consequences:
+      - All services must instrument with OTel
+      - SLO definitions required per service
+    reconsider_if:
+      - Never (observability is non-negotiable)
+
+# Trade-offs
+trade_offs:
+  - area: Feature richness vs simplicity
+    choice: Chose feature-rich tools (Istio, full compliance)
+    rationale: Enterprise requirements demand features over simplicity
+
+  - area: AWS lock-in vs multi-cloud
+    choice: AWS-first with abstraction layers
+    rationale: Pragmatic - can add multi-cloud later if needed
+
+  - area: Complexity vs capability
+    choice: Higher complexity for enterprise capability
+    rationale: Target market requires enterprise features
+
+# Related ADRs
+related_adrs: []
+
+# Review schedule
+review:
+  next_review: 2026-08-05
+  frequency: quarterly

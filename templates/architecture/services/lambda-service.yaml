@@ -1,0 +1,114 @@
+# Lambda Service Template
+# Use this for event-driven, serverless workloads
+
+service: payment-processor
+type: backend-api
+version: "1.0.0"
+team: platform-team
+
+# Deployment pattern - THIS IS KEY
+deployment:
+  pattern: lambda
+  runtime: nodejs20.x
+  memory_mb: 256
+  timeout_seconds: 30
+  architecture: arm64          # Cost-effective
+
+# API Gateway configuration
+api:
+  type: http                   # HTTP API (cheaper) or REST
+  stage: $default
+  cors:
+    enabled: true
+    origins:
+      - https://app.example.com
+  auth:
+    type: jwt                  # jwt, iam, or none
+    issuer: https://auth.example.com
+
+# Dependencies
+dependencies:
+  database: dynamodb           # or postgres via RDS Proxy
+  cache: elasticache           # optional
+  messaging:
+    - sqs                      # For async processing
+    - eventbridge              # For event publishing
+
+# Observability profile
+observability_profile: standard
+
+# Environment-specific overrides
+environments:
+  local:
+    # Use SAM local for testing
+    sam_local: true
+    dynamodb:
+      type: dynamodb-local
+      endpoint: http://localhost:8000
+
+  dev:
+    lambda:
+      memory_mb: 256
+      provisioned_concurrency: 0
+    dynamodb:
+      billing_mode: PAY_PER_REQUEST
+
+  staging:
+    lambda:
+      memory_mb: 512
+      provisioned_concurrency: 2
+    dynamodb:
+      billing_mode: PAY_PER_REQUEST
+
+  prod:
+    lambda:
+      memory_mb: 1024
+      provisioned_concurrency: 10
+    dynamodb:
+      billing_mode: PROVISIONED
+      read_capacity: 100
+      write_capacity: 50
+
+# Resilience (Lambda handles retries, but configure DLQ)
+resilience:
+  retry:
+    enabled: true
+    max_attempts: 2           # Lambda retry attempts
+  dlq:
+    enabled: true
+    type: sqs
+  timeout:
+    api_gateway_ms: 29000     # Must be less than Lambda timeout
+
+# Health checks (for API Gateway)
+health:
+  endpoint: /health
+  response: '{"status": "healthy"}'
+
+# SLO definitions
+slos:
+  availability:
+    target: 99.9
+    window: 30d
+  latency_p99:
+    target_ms: 500            # Lambda cold starts can be higher
+    window: 30d
+  error_rate:
+    target_percent: 0.1
+    window: 30d
+
+# Security configuration
+security:
+  iam:
+    least_privilege: true
+    actions_allowed:
+      - dynamodb:GetItem
+      - dynamodb:PutItem
+      - dynamodb:Query
+      - sqs:SendMessage
+      - ssm:GetParameter
+  secrets:
+    store: ssm                 # SSM Parameter Store
+    kms_encrypted: true
+  vpc:
+    enabled: false             # Lambda doesn't need VPC unless accessing VPC resources

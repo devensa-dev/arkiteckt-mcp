@@ -1,0 +1,101 @@
+# Service Definition - order-service
+# This defines a complete service with all enterprise requirements
+
+service: order-service
+type: backend-api
+version: "1.0.0"
+team: platform-team
+
+# Runtime configuration
+runtime: node20
+container: ecs-fargate
+
+# Dependencies
+dependencies:
+  database: postgres
+  cache: redis
+  messaging: sqs
+  services:
+    - user-service
+    - inventory-service
+
+# Observability profile
+observability_profile: standard
+
+# Environment-specific overrides
+environments:
+  local:
+    database:
+      type: docker-postgres
+      host: localhost
+      port: 5432
+  dev:
+    database:
+      type: aurora-serverless
+      instance_class: db.t3.medium
+  staging:
+    database:
+      type: aurora
+      instance_class: db.r6g.large
+  prod:
+    database:
+      type: aurora
+      instance_class: db.r6g.xlarge
+      multi_az: true
+      read_replicas: 2
+
+# Resilience patterns (MANDATORY for production)
+resilience:
+  circuit_breaker:
+    enabled: true
+    failure_threshold_percent: 50
+    timeout_seconds: 60
+    half_open_requests: 3
+  retry:
+    enabled: true
+    max_attempts: 3
+    backoff: exponential
+    initial_delay_ms: 100
+    max_delay_ms: 10000
+    jitter: true
+  timeout:
+    connect_ms: 5000
+    read_ms: 15000
+    write_ms: 10000
+  bulkhead:
+    enabled: true
+    max_concurrent: 100
+    max_wait_ms: 500
+  fallback:
+    strategy: cached_response
+    cache_ttl_seconds: 300
+
+# Health checks
+health:
+  liveness:
+    path: /health/live
+    interval_seconds: 10
+    timeout_seconds: 5
+    failure_threshold: 3
+  readiness:
+    path: /health/ready
+    interval_seconds: 5
+    timeout_seconds: 3
+    failure_threshold: 3
+  startup:
+    path: /health/startup
+    initial_delay_seconds: 10
+    period_seconds: 5
+    failure_threshold: 30
+
+# SLO definitions
+slos:
+  availability:
+    target: 99.9
+    window: 30d
+  latency_p99:
+    target_ms: 200
+    window: 30d
+  error_rate:
+    target_percent: 0.1
+    window: 30d

@@ -1,0 +1,184 @@
+# ECS Fargate Service Template
+# Use this for container workloads without Kubernetes complexity
+
+service: inventory-service
+type: backend-api
+version: "1.0.0"
+team: platform-team
+
+# Deployment pattern - THIS IS KEY
+deployment:
+  pattern: ecs_fargate
+  runtime: node20
+  container:
+    cpu: 256                   # 0.25 vCPU
+    memory: 512                # 512 MB
+    port: 3000
+
+# Load balancer configuration
+load_balancer:
+  type: alb
+  scheme: internal             # internal or internet-facing
+  health_check:
+    path: /health
+    interval_seconds: 30
+    timeout_seconds: 5
+    healthy_threshold: 2
+    unhealthy_threshold: 3
+
+# Dependencies
+dependencies:
+  database: postgres           # RDS PostgreSQL
+  cache: redis                 # ElastiCache Redis
+  messaging:
+    - sqs
+  services:
+    - user-service
+    - order-service
+
+# Observability profile
+observability_profile: standard
+
+# Environment-specific overrides
+environments:
+  local:
+    # Use Docker Compose for local dev
+    docker_compose: true
+    database:
+      type: docker-postgres
+      host: localhost
+      port: 5432
+    cache:
+      type: docker-redis
+      host: localhost
+      port: 6379
+
+  dev:
+    container:
+      cpu: 256
+      memory: 512
+    scaling:
+      min_tasks: 1
+      max_tasks: 2
+      target_cpu_percent: 70
+    database:
+      type: aurora-serverless
+      instance_class: db.t3.medium
+
+  staging:
+    container:
+      cpu: 512
+      memory: 1024
+    scaling:
+      min_tasks: 2
+      max_tasks: 4
+      target_cpu_percent: 70
+    database:
+      type: aurora
+      instance_class: db.r6g.large
+
+  prod:
+    container:
+      cpu: 1024
+      memory: 2048
+    scaling:
+      min_tasks: 3
+      max_tasks: 20
+      target_cpu_percent: 70
+      scale_in_cooldown: 300
+      scale_out_cooldown: 60
+    database:
+      type: aurora
+      instance_class: db.r6g.xlarge
+      multi_az: true
+      read_replicas: 2
+
+# Resilience patterns
+resilience:
+  circuit_breaker:
+    enabled: true
+    failure_threshold_percent: 50
+    timeout_seconds: 60
+    half_open_requests: 3
+  retry:
+    enabled: true
+    max_attempts: 3
+    backoff: exponential
+    initial_delay_ms: 100
+    max_delay_ms: 10000
+    jitter: true
+  timeout:
+    connect_ms: 5000
+    read_ms: 15000
+    write_ms: 10000
+  bulkhead:
+    enabled: true
+    max_concurrent: 100
+    max_wait_ms: 500
+  fallback:
+    strategy: cached_response
+    cache_ttl_seconds: 300
+
+# Health checks
+health:
+  liveness:
+    path: /health/live
+    interval_seconds: 10
+    timeout_seconds: 5
+    failure_threshold: 3
+  readiness:
+    path: /health/ready
+    interval_seconds: 5
+    timeout_seconds: 3
+    failure_threshold: 3
+  startup:
+    path: /health/startup
+    initial_delay_seconds: 10
+    period_seconds: 5
+    failure_threshold: 30
+
+# SLO definitions
+slos:
+  availability:
+    target: 99.9
+    window: 30d
+  latency_p99:
+    target_ms: 200
+    window: 30d
+  error_rate:
+    target_percent: 0.1
+    window: 30d
+
+# Security configuration
+security:
+  iam:
+    task_role: true
+    execution_role: true
+    least_privilege: true
+    actions_allowed:
+      - rds:DescribeDBClusters
+      - ssm:GetParameter
+      - ssm:GetParameters
+      - sqs:SendMessage
+      - sqs:ReceiveMessage
+  secrets:
+    store: ssm
+    kms_encrypted: true
+    secrets_required:
+      - DATABASE_URL
+      - REDIS_URL
+      - API_KEY
+  vpc:
+    enabled: true
+    private_subnets: true
+    security_groups:
+      ingress:
+        - from: alb
+          port: 3000
+      egress:
+        - to: rds
+          port: 5432
+        - to: elasticache
+          port: 6379
+        - to: internet
+          port: 443

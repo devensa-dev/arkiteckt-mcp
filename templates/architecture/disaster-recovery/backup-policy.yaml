@@ -1,0 +1,71 @@
+# Disaster Recovery - Backup Policy
+# Defines RTO/RPO targets and backup schedules
+
+backup_policy:
+  version: "1.0"
+
+# Recovery objectives by tier
+tiers:
+  tier1_critical:
+    description: Mission-critical data (user data, transactions)
+    rto_hours: 1
+    rpo_minutes: 15
+    backup_frequency: continuous  # Point-in-time recovery
+    retention:
+      hot_days: 7
+      warm_days: 30
+      cold_years: 7
+    cross_region: required
+    encryption: required
+    immutable: true  # For compliance
+
+  tier2_standard:
+    description: Standard business data
+    rto_hours: 4
+    rpo_hours: 1
+    backup_frequency: hourly
+    retention:
+      hot_days: 7
+      warm_days: 90
+      cold_years: 3
+    cross_region: required
+    encryption: required
+
+  tier3_operational:
+    description: Operational data (logs, metrics)
+    rto_hours: 24
+    rpo_hours: 24
+    backup_frequency: daily
+    retention:
+      hot_days: 30
+      cold_years: 1
+    cross_region: optional
+
+# Backup targets
+databases:
+  aurora:
+    automated_backups: true
+    backup_retention_period: 35
+    copy_tags_to_snapshot: true
+    delete_automated_backups_on_delete: false
+    enable_performance_insights: true
+
+  dynamodb:
+    point_in_time_recovery: true
+    continuous_backups: true
+
+# S3 bucket backups
+s3:
+  versioning: enabled
+  replication:
+    enabled: true
+    destination_region: us-west-2
+  lifecycle:
+    transition_to_glacier_days: 90
+    expiration_days: 2555  # 7 years
+
+# Testing requirements
+testing:
+  dr_drill_frequency: quarterly
+  restore_test_frequency: monthly
+  runbook_review: quarterly

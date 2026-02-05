@@ -1,0 +1,386 @@
+# Capabilities Definition - What each operation MEANS for this organization
+# This is the CORE of the MCP - it defines what "production-ready" means
+#
+# When AI asks "create a service", MCP expands this based on deployment pattern
+
+version: "1.0"
+
+# =============================================================================
+# CREATE SERVICE CAPABILITY
+# =============================================================================
+# This is the most important capability - when AI says "create a service",
+# the MCP returns the complete checklist based on the deployment pattern
+
+capabilities:
+
+  create_service:
+    description: Create a new microservice with all production-ready artifacts
+
+    # Common requirements for ALL deployment patterns
+    common:
+      code:
+        - application_code
+        - unit_tests
+        - integration_tests
+
+      ci_cd:
+        - ci_pipeline
+        - deploy_workflow
+        - quality_gates
+
+      security:
+        - iam_role
+        - secrets_config
+        - security_scan_config
+
+      observability:
+        - logging_config
+        - metrics_config
+        - alarms_config
+
+      documentation:
+        - service_yaml         # Register in architecture
+        - readme
+
+    # Pattern-specific requirements
+    deployment_patterns:
+
+      # =========================================
+      # LAMBDA (Serverless)
+      # =========================================
+      lambda:
+        description: AWS Lambda with API Gateway
+        infrastructure:
+          - sam_template           # template.yaml
+          - api_gateway_config     # API routes, CORS, auth
+          - cloudwatch_alarms      # Lambda-specific alarms
+
+        code_structure:
+          src:
+            - handlers/            # Lambda handler functions
+            - lib/                 # Shared utilities
+            - types/               # Type definitions
+          tests:
+            - unit/
+            - integration/
+
+        ci_cd:
+          provider: github-actions
+          steps:
+            - lint
+            - test
+            - security-scan
+            - sam-build
+            - sam-deploy
+
+        observability:
+          - cloudwatch_logs
+          - xray_tracing
+          - custom_metrics:
+              - invocations
+              - errors
+              - duration
+              - concurrent_executions
+
+        security:
+          - iam_least_privilege
+          - secrets_in_ssm
+          - vpc_optional: false    # Lambda doesn't require VPC by default
+
+      # =========================================
+      # ECS FARGATE (Serverless Containers)
+      # =========================================
+      ecs_fargate:
+        description: ECS Fargate with ALB
+        infrastructure:
+          - dockerfile
+          - task_definition        # ECS task definition
+          - service_definition     # ECS service
+          - alb_target_group       # Load balancer config
+          - cloudwatch_alarms
+
+        code_structure:
+          src:
+            - app/                 # Application code
+            - lib/                 # Shared utilities
+            - types/               # Type definitions
+          tests:
+            - unit/
+            - integration/
+
+        ci_cd:
+          provider: github-actions
+          steps:
+            - lint
+            - test
+            - security-scan
+            - docker-build
+            - ecr-push
+            - ecs-deploy
+
+        observability:
+          - cloudwatch_logs
+          - container_insights
+          - xray_tracing
+          - custom_metrics:
+              - request_count
+              - latency
+              - error_rate
+              - cpu_utilization
+              - memory_utilization
+
+        security:
+          - iam_task_role
+          - secrets_in_ssm
+          - vpc_required: true
+          - security_groups
+
+      # =========================================
+      # ECS EC2 (Containers on EC2)
+      # =========================================
+      ecs_ec2:
+        description: ECS on EC2 with ALB
+        infrastructure:
+          - dockerfile
+          - task_definition
+          - service_definition
+          - capacity_provider       # EC2 capacity provider
+          - asg_config              # Auto-scaling group
+          - alb_target_group
+          - cloudwatch_alarms
+
+        code_structure:
+          src:
+            - app/
+            - lib/
+            - types/
+          tests:
+            - unit/
+            - integration/
+
+        ci_cd:
+          provider: github-actions
+          steps:
+            - lint
+            - test
+            - security-scan
+            - docker-build
+            - ecr-push
+            - ecs-deploy
+
+        observability:
+          - cloudwatch_logs
+          - container_insights
+          - cloudwatch_agent        # For EC2 metrics
+          - custom_metrics:
+              - request_count
+              - latency
+              - error_rate
+
+        security:
+          - iam_task_role
+          - iam_instance_role
+          - secrets_in_ssm
+          - vpc_required: true
+          - security_groups
+
+      # =========================================
+      # EC2 (Traditional VMs)
+      # =========================================
+      ec2:
+        description: EC2 with ASG and ALB
+        infrastructure:
+          - launch_template         # EC2 launch template
+          - asg_config              # Auto-scaling group
+          - alb_target_group
+          - ami_config              # AMI building config
+          - user_data_script        # Instance bootstrap
+          - cloudwatch_alarms
+
+        code_structure:
+          src:
+            - app/
+            - lib/
+            - types/
+          deploy:
+            - systemd_service       # Service definition
+            - nginx_config          # Reverse proxy (optional)
+          tests:
+            - unit/
+            - integration/
+
+        ci_cd:
+          provider: github-actions
+          steps:
+            - lint
+            - test
+            - security-scan
+            - build-artifact
+            - create-ami           # Or deploy via CodeDeploy
+            - deploy-asg
+
+        observability:
+          - cloudwatch_agent
+          - cloudwatch_logs
+          - custom_metrics:
+              - request_count
+              - latency
+              - error_rate
+
+        security:
+          - iam_instance_role
+          - secrets_in_ssm
+          - vpc_required: true
+          - security_groups
+          - ssm_session_manager     # For SSH-less access
+
+      # =========================================
+      # KUBERNETES (EKS)
+      # =========================================
+      kubernetes:
+        description: Kubernetes with Helm on EKS
+        infrastructure:
+          - dockerfile
+          - helm_chart:
+              - Chart.yaml
+              - values.yaml
+              - values-dev.yaml
+              - values-staging.yaml
+              - values-prod.yaml
+              - templates/
+          - network_policy
+          - pod_disruption_budget
+          - horizontal_pod_autoscaler
+
+        code_structure:
+          src:
+            - app/
+            - lib/
+            - types/
+          tests:
+            - unit/
+            - integration/
+
+        ci_cd:
+          provider: github-actions
+          steps:
+            - lint
+            - test
+            - security-scan
+            - docker-build
+            - ecr-push
+            - helm-lint
+            - helm-deploy
+
+        observability:
+          - prometheus_metrics
+          - opentelemetry_tracing
+          - fluentd_logging
+          - custom_metrics:
+              - request_count
+              - latency
+              - error_rate
+
+        security:
+          - irsa                    # IAM Roles for Service Accounts
+          - secrets_in_ssm
+          - network_policy
+          - pod_security_policy
+
+  # =============================================================================
+  # ADD ENDPOINT CAPABILITY
+  # =============================================================================
+  add_endpoint:
+    description: Add a new API endpoint to an existing service
+    requires:
+      - handler_code              # New endpoint handler
+      - unit_tests                # Tests for new endpoint
+      - integration_tests
+      - update_api_config         # Update API Gateway/routes
+      - update_iam_if_needed      # New permissions if required
+      - update_documentation
+
+  # =============================================================================
+  # ADD DATABASE CAPABILITY
+  # =============================================================================
+  add_database:
+    description: Add database dependency to a service
+    options:
+      postgres:
+        requires:
+          - rds_config
+          - security_group_rule
+          - secret_for_credentials
+          - migration_setup
+          - connection_pool_config
+
+      dynamodb:
+        requires:
+          - table_definition
+          - iam_policy_update
+          - gsi_config_if_needed
+
+      aurora:
+        requires:
+          - cluster_config
+          - security_group_rule
+          - secret_for_credentials
+          - migration_setup
+
+  # =============================================================================
+  # ADD MESSAGING CAPABILITY
+  # =============================================================================
+  add_messaging:
+    description: Add message queue/event dependency
+    options:
+      sqs:
+        requires:
+          - queue_definition
+          - dlq_config
+          - iam_policy_update
+          - consumer_handler
+
+      eventbridge:
+        requires:
+          - event_bus_rule
+          - event_schema
+          - target_config
+          - iam_policy_update
+
+      sns:
+        requires:
+          - topic_definition
+          - subscription_config
+          - iam_policy_update
+
+  # =============================================================================
+  # CREATE LIBRARY CAPABILITY
+  # =============================================================================
+  create_library:
+    description: Create a shared library/package
+    requires:
+      - library_code
+      - unit_tests
+      - package_json             # For npm
+      - ci_pipeline
+      - documentation
+      - versioning_config
+
+# =============================================================================
+# QUALITY REQUIREMENTS
+# =============================================================================
+quality_requirements:
+  testing:
+    unit_coverage_min: 80
+    integration_tests_required: true
+    e2e_tests_optional: true
+
+  security:
+    sast_required: true          # Static analysis
+    dependency_scan: true        # Vulnerability scanning
+    secrets_scan: true           # No hardcoded secrets
+
+  code_quality:
+    linting_required: true
+    type_checking: true          # TypeScript strict mode
+    code_review_required: true
