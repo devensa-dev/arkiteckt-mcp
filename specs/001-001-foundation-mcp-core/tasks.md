@@ -17,13 +17,13 @@
 
 **Purpose**: Project initialization and TypeScript configuration
 
-- [ ] T001 Initialize npm project with package.json (name: arkiteckt-mcp)
-- [ ] T002 Configure TypeScript 5.3+ with strict mode in tsconfig.json
-- [ ] T003 [P] Configure ESLint and Prettier
-- [ ] T004 [P] Configure Vitest for testing
-- [ ] T005 Install production dependencies: @modelcontextprotocol/sdk, zod, yaml, simple-git, commander
-- [ ] T006 Install dev dependencies: typescript, @types/node, vitest, eslint, prettier
-- [ ] T007 Create project directory structure per plan.md
+- [x] T001 Initialize npm project with package.json (name: arkiteckt-mcp)
+- [x] T002 Configure TypeScript 5.3+ with strict mode in tsconfig.json
+- [x] T003 [P] Configure ESLint and Prettier
+- [x] T004 [P] Configure Vitest for testing
+- [x] T005 Install production dependencies: @modelcontextprotocol/sdk, zod, yaml, simple-git, commander
+- [x] T006 Install dev dependencies: typescript, @types/node, vitest, eslint, prettier
+- [x] T007 Create project directory structure per plan.md
 
 **Checkpoint**: `npm run build` passes (even with empty files)
 
