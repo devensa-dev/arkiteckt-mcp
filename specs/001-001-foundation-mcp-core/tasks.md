@@ -3,7 +3,7 @@
 **Input**: Design documents from `/specs/001-001-foundation-mcp-core/`
 **Prerequisites**: plan.md (required), spec.md (required)
 
-**Framework Note**: MCP is cloud-agnostic. Tasks use extensible schemas (`.passthrough()`) so users can add custom fields for ANY cloud/pattern.
+**Framework Note**: MCP is cloud-agnostic. Tasks use extensible schemas (`z.looseObject()` in Zod v4) so users can add custom fields for ANY cloud/pattern.
 
 ## Format: `[ID] [P?] [Story] Description`
 
@@ -37,18 +37,18 @@
 
 ### Core Schemas (src/core/schemas/)
 
-- [ ] T008 [P] Create SystemSchema in src/core/schemas/system.schema.ts (cloud-agnostic with .passthrough())
-- [ ] T009 [P] Create ServiceSchema in src/core/schemas/service.schema.ts (deployment.pattern field)
-- [ ] T010 [P] Create EnvironmentSchema in src/core/schemas/environment.schema.ts
-- [ ] T011 [P] Create ObservabilitySchema in src/core/schemas/observability.schema.ts
-- [ ] T012 [P] Create CICDSchema in src/core/schemas/cicd.schema.ts
-- [ ] T013 [P] Create SecuritySchema in src/core/schemas/security.schema.ts
-- [ ] T014 [P] Create ADRSchema in src/core/schemas/adr.schema.ts
-- [ ] T015 [P] Create TenantSchema in src/core/schemas/tenant.schema.ts
-- [ ] T016 [P] Create RuleSchema in src/core/schemas/rule.schema.ts
-- [ ] T017 [P] Create CapabilitySchema in src/core/schemas/capability.schema.ts
-- [ ] T018 Export all schemas from src/core/schemas/index.ts
-- [ ] T019 Write unit tests for all schemas in tests/unit/schemas/
+- [x] T008 [P] Create SystemSchema in src/core/schemas/system.schema.ts (cloud-agnostic with z.looseObject())
+- [x] T009 [P] Create ServiceSchema in src/core/schemas/service.schema.ts (deployment.pattern field)
+- [x] T010 [P] Create EnvironmentSchema in src/core/schemas/environment.schema.ts
+- [x] T011 [P] Create ObservabilitySchema in src/core/schemas/observability.schema.ts
+- [x] T012 [P] Create CICDSchema in src/core/schemas/cicd.schema.ts
+- [x] T013 [P] Create SecuritySchema in src/core/schemas/security.schema.ts
+- [x] T014 [P] Create ADRSchema in src/core/schemas/adr.schema.ts
+- [x] T015 [P] Create TenantSchema in src/core/schemas/tenant.schema.ts
+- [x] T016 [P] Create RuleSchema in src/core/schemas/rule.schema.ts
+- [x] T017 [P] Create CapabilitySchema in src/core/schemas/capability.schema.ts
+- [x] T018 Export all schemas from src/core/schemas/index.ts
+- [x] T019 Write unit tests for all schemas in tests/unit/schemas/
 
 ### Core Utilities (src/shared/)
 
@@ -320,4 +320,4 @@ Phase 13 (Polish)
 - Each user story should be independently testable
 - Verify tests fail before implementing
 - Commit after each task or logical group
-- Schemas use `.passthrough()` for extensibility (cloud-agnostic)
+- Schemas use `z.looseObject()` (Zod v4) for extensibility (cloud-agnostic)
