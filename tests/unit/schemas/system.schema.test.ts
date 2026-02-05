@@ -3,7 +3,6 @@ import {
   SystemSchema,
   ArchitectureStyleSchema,
   RuntimeDefaultsSchema,
-  GlobalDefaultsSchema,
   RepositorySchema,
 } from '../../../src/core/schemas/system.schema.js';
 

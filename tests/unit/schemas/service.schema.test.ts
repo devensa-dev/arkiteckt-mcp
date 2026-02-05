@@ -3,7 +3,6 @@ import {
   ServiceSchema,
   DeploymentPatternSchema,
   ServiceTypeSchema,
-  DeploymentConfigSchema,
   ContainerConfigSchema,
   ResilienceSchema,
 } from '../../../src/core/schemas/service.schema.js';

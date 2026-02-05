@@ -7,7 +7,6 @@ import {
   EncryptionSchema,
   AuthenticationSchema,
   AuthorizationSchema,
-  ComplianceSchema,
 } from '../../../src/core/schemas/security.schema.js';
 
 describe('SecuritySchema', () => {

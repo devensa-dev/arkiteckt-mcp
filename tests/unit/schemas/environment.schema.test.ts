@@ -5,8 +5,6 @@ import {
   AvailabilitySchema,
   ScalingSchema,
   SecurityLevelSchema,
-  EnvironmentSecuritySchema,
-  DatabaseConfigSchema,
   DisasterRecoverySchema,
 } from '../../../src/core/schemas/environment.schema.js';
 

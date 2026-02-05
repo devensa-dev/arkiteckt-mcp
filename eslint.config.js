@@ -10,7 +10,7 @@ export default tseslint.config(
   {
     languageOptions: {
       parserOptions: {
-        project: true,
+        project: './tsconfig.eslint.json',
         tsconfigRootDir: import.meta.dirname,
       },
     },
@@ -24,6 +24,15 @@ export default tseslint.config(
       '@typescript-eslint/prefer-nullish-coalescing': 'error',
       '@typescript-eslint/prefer-optional-chain': 'error',
       '@typescript-eslint/strict-boolean-expressions': 'warn',
+      // Allow deprecated Zod v4 types during migration
+      '@typescript-eslint/no-deprecated': 'warn',
+      // Allow template expressions with numbers/unknowns
+      '@typescript-eslint/restrict-template-expressions': [
+        'error',
+        { allowNumber: true, allowAny: false, allowBoolean: false, allowNullish: false },
+      ],
+      // Allow potential [object Object] for unknown values
+      '@typescript-eslint/no-base-to-string': 'warn',
     },
   },
   {

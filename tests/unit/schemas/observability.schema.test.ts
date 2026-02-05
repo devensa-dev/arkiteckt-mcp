@@ -4,7 +4,6 @@ import {
   LoggingSchema,
   MetricsSchema,
   TracingSchema,
-  AlertingSchema,
   SLOSchema,
   DORAMetricsSchema,
 } from '../../../src/core/schemas/observability.schema.js';

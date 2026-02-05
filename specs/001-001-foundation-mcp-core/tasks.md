@@ -52,15 +52,15 @@
 
 ### Core Utilities (src/shared/)
 
-- [ ] T020 [P] Create YAML parser utility in src/shared/utils/yaml.ts
-- [ ] T021 [P] Create validation utilities in src/shared/utils/validation.ts
-- [ ] T022 [P] Create shared types in src/shared/types/index.ts
+- [x] T020 [P] Create YAML parser utility in src/shared/utils/yaml.ts
+- [x] T021 [P] Create validation utilities in src/shared/utils/validation.ts
+- [x] T022 [P] Create shared types in src/shared/types/index.ts
 
 ### Architecture Store Foundation (src/core/store/)
 
-- [ ] T023 Create Cache class with TTL in src/core/store/cache.ts
-- [ ] T024 Create YamlParser with error handling in src/core/store/yaml-parser.ts
-- [ ] T025 Create ArchitectureStore interface in src/core/store/architecture-store.ts
+- [x] T023 Create Cache class with TTL in src/core/store/cache.ts
+- [x] T024 Create YamlParser with error handling in src/core/store/yaml-parser.ts
+- [x] T025 Create ArchitectureStore interface in src/core/store/architecture-store.ts
 
 **Checkpoint**: Foundation ready - user story implementation can begin
 

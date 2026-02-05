@@ -4,8 +4,6 @@ import {
   PipelineProviderSchema,
   PipelineStepSchema,
   QualityGateSchema,
-  SonarQubeSchema,
-  SecurityScanSchema,
   DeploymentStageSchema,
   BranchStrategySchema,
 } from '../../../src/core/schemas/cicd.schema.js';
