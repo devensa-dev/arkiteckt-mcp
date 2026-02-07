@@ -1,0 +1,21 @@
+name: service-capabilities
+capabilities:
+  - name: create_service
+    description: Create a new microservice with standard project structure
+    artifacts:
+      - type: source-code
+        template: service-template
+        path: "src/"
+      - type: unit-test
+        template: test-template
+        path: "tests/"
+      - type: pipeline
+        template: ci-template
+        path: ".github/workflows/"
+    checklist:
+      - Implement health check endpoint
+      - Add structured logging
+      - Configure metrics collection
+      - Set up circuit breaker for dependencies
+      - Write integration tests
+      - Add API documentation

@@ -1,0 +1,42 @@
+provider: github-actions
+
+steps:
+  - name: lint
+    type: quality
+    command: npm run lint
+  - name: test
+    type: test
+    command: npm run test
+  - name: build
+    type: build
+    command: npm run build
+  - name: security-scan
+    type: security
+    command: npm audit
+  - name: deploy
+    type: deploy
+    command: npm run deploy
+
+qualityGates:
+  coverage:
+    minimum: 80
+    enforced: true
+  linting:
+    enforced: true
+  securityScan:
+    enforced: true
+    blockOnCritical: true
+
+environments:
+  dev:
+    trigger: push
+    branch: develop
+    autoApprove: true
+  staging:
+    trigger: push
+    branch: main
+    autoApprove: false
+  prod:
+    trigger: manual
+    branch: main
+    requiredApprovals: 2

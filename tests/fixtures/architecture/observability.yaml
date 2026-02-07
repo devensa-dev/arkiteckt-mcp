@@ -1,0 +1,31 @@
+logging:
+  format: structured
+  level: info
+  provider: cloudwatch
+
+metrics:
+  provider: prometheus
+  scrapeInterval: 15
+  retention: 30
+
+tracing:
+  enabled: true
+  provider: otel
+  samplingRate: 0.1
+
+alerting:
+  provider: pagerduty
+  channels:
+    - type: slack
+      target: "#platform-alerts"
+    - type: email
+      target: oncall@example.com
+
+slos:
+  - name: api-availability
+    target: 99.9
+    window: 30d
+  - name: api-latency-p99
+    target: 500
+    unit: ms
+    window: 30d

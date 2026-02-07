@@ -1,0 +1,61 @@
+name: prod
+description: Production environment with high availability and strict security
+stage: prod
+isProduction: true
+
+availability:
+  replicas: 3
+  multiAZ: true
+  multiRegion: false
+
+scaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPU: 70
+  cooldownPeriod: 300
+
+security:
+  level: strict
+  encryption:
+    atRest: true
+    inTransit: true
+  network:
+    privateOnly: true
+    vpcEndpoints: true
+  authentication:
+    required: true
+    mfaRequired: true
+    sessionTimeout: 3600
+
+database:
+  multiAZ: true
+  replicas: 2
+  backup:
+    enabled: true
+    retentionDays: 30
+    window: "03:00-04:00"
+
+resources:
+  cpu:
+    default: "1000"
+    max: "4000"
+  memory:
+    default: "2Gi"
+    max: "8Gi"
+
+disasterRecovery:
+  enabled: true
+  rto: 60
+  rpo: 15
+  backupRegion: us-west-2
+  strategy: warm-standby
+
+features:
+  debug-mode: false
+  hot-reload: false
+  mock-payments: false
+
+variables:
+  LOG_LEVEL: warn
+  NODE_ENV: production

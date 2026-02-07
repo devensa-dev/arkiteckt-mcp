@@ -74,10 +74,10 @@
 
 ### Implementation for User Story 1
 
-- [ ] T026 [US1] Implement getSystem() in src/core/store/architecture-store.ts
-- [ ] T027 [US1] Write unit test for getSystem() in tests/unit/store/
-- [ ] T028 [US1] Implement get_system_context MCP tool in src/server/tools/read/get-system-context.ts
-- [ ] T029 [US1] Write integration test for get_system_context tool
+- [x] T026 [US1] Implement getSystem() in src/core/store/architecture-store.ts
+- [x] T027 [US1] Write unit test for getSystem() in tests/unit/store/
+- [x] T028 [US1] Implement get_system_context MCP tool in src/server/tools/read/get-system-context.ts
+- [x] T029 [US1] Write integration test for get_system_context tool
 
 **Checkpoint**: AI can query system context successfully
 
@@ -91,11 +91,11 @@
 
 ### Implementation for User Story 2
 
-- [ ] T030 [US2] Implement getService(name) in src/core/store/architecture-store.ts
-- [ ] T031 [US2] Implement getServices() in src/core/store/architecture-store.ts
-- [ ] T032 [P] [US2] Write unit tests for service store methods
-- [ ] T033 [US2] Implement get_service_context MCP tool in src/server/tools/read/get-service-context.ts
-- [ ] T034 [US2] Write integration test for get_service_context tool
+- [x] T030 [US2] Implement getService(name) in src/core/store/architecture-store.ts
+- [x] T031 [US2] Implement getServices() in src/core/store/architecture-store.ts
+- [x] T032 [P] [US2] Write unit tests for service store methods
+- [x] T033 [US2] Implement get_service_context MCP tool in src/server/tools/read/get-service-context.ts
+- [x] T034 [US2] Write integration test for get_service_context tool
 
 **Checkpoint**: AI can query service context with environment resolution
 
@@ -109,14 +109,14 @@
 
 ### Implementation for User Story 7
 
-- [ ] T035 [US7] Define ResolutionContext type in src/core/engines/resolution-engine.ts
-- [ ] T036 [US7] Define ResolvedServiceContext type
-- [ ] T037 [US7] Implement deep merge utility
-- [ ] T038 [US7] Implement resolveServiceContext(service, env, tenant?)
-- [ ] T039 [US7] Add cycle detection for dependencies
-- [ ] T040 [US7] Write unit tests for merge order in tests/unit/engines/
-- [ ] T041 [US7] Write unit tests for tenant overrides
-- [ ] T042 [US7] Write integration tests for complex resolution scenarios
+- [x] T035 [US7] Define ResolutionContext type in src/core/engines/resolution-engine.ts
+- [x] T036 [US7] Define ResolvedServiceContext type
+- [x] T037 [US7] Implement deep merge utility
+- [x] T038 [US7] Implement resolveServiceContext(service, env, tenant?)
+- [x] T039 [US7] Add cycle detection for dependencies
+- [x] T040 [US7] Write unit tests for merge order in tests/unit/engines/
+- [x] T041 [US7] Write unit tests for tenant overrides
+- [x] T042 [US7] Write integration tests for complex resolution scenarios
 
 **Checkpoint**: Resolution engine correctly merges all config levels
 
@@ -130,11 +130,11 @@
 
 ### Implementation for User Story 3
 
-- [ ] T043 [US3] Implement init() method in architecture-store.ts
-- [ ] T044 [US3] Implement --repair flag logic (add missing, don't overwrite)
-- [ ] T045 [US3] Create default template files in templates/architecture/
-- [ ] T046 [US3] Implement `arch init` CLI command in src/cli/commands/init.ts
-- [ ] T047 [US3] Write integration test for arch init command
+- [x] T043 [US3] Implement init() method in architecture-store.ts
+- [x] T044 [US3] Implement --repair flag logic (add missing, don't overwrite)
+- [x] T045 [US3] Create default template files in templates/architecture/
+- [x] T046 [US3] Implement `arch init` CLI command in src/cli/commands/init.ts
+- [x] T047 [US3] Write integration test for arch init command
 
 **Checkpoint**: arch init creates valid, usable architecture structure
 
@@ -148,11 +148,11 @@
 
 ### Implementation for User Stories 8 & 9
 
-- [ ] T048 [US8] Implement getCapabilities() in architecture-store.ts
-- [ ] T049 [US8] Implement get_capability_requirements MCP tool in src/server/tools/read/get-capability-requirements.ts
-- [ ] T050 [US9] Implement pattern-based artifact expansion in capability tool
-- [ ] T051 [P] [US8] Write integration tests for capability requirements
-- [ ] T052 [P] [US9] Write tests for pattern-specific artifact checklists (lambda, ecs, k8s examples)
+- [x] T048 [US8] Implement getCapabilities() in architecture-store.ts
+- [x] T049 [US8] Implement get_capability_requirements MCP tool in src/server/tools/read/get-capability-requirements.ts
+- [x] T050 [US9] Implement pattern-based artifact expansion in capability tool
+- [x] T051 [P] [US8] Write integration tests for capability requirements
+- [x] T052 [P] [US9] Write tests for pattern-specific artifact checklists (lambda, ecs, k8s examples)
 
 **Checkpoint**: AI gets complete, pattern-specific artifact checklists
 
@@ -166,11 +166,11 @@
 
 ### Implementation for User Story 4
 
-- [ ] T053 [US4] Implement getEnvironment(name) in architecture-store.ts
-- [ ] T054 [US4] Implement getEnvironments() method
-- [ ] T055 [US4] Implement resolveEnvironmentContext(env, tenant?) in resolution-engine.ts
-- [ ] T056 [US4] Implement get_environment_context MCP tool in src/server/tools/read/get-environment-context.ts
-- [ ] T057 [US4] Write integration test for environment context tool
+- [x] T053 [US4] Implement getEnvironment(name) in architecture-store.ts
+- [x] T054 [US4] Implement getEnvironments() method
+- [x] T055 [US4] Implement resolveEnvironmentContext(env, tenant?) in resolution-engine.ts
+- [x] T056 [US4] Implement get_environment_context MCP tool in src/server/tools/read/get-environment-context.ts
+- [x] T057 [US4] Write integration test for environment context tool
 
 **Checkpoint**: AI can query environment-specific settings
 
@@ -184,9 +184,9 @@
 
 ### Implementation for User Story 5
 
-- [ ] T058 [US5] Implement getCIRequirements() in architecture-store.ts
-- [ ] T059 [US5] Implement get_ci_requirements MCP tool in src/server/tools/read/get-ci-requirements.ts
-- [ ] T060 [US5] Write integration test for CI requirements tool
+- [x] T058 [US5] Implement getCIRequirements() in architecture-store.ts
+- [x] T059 [US5] Implement get_ci_requirements MCP tool in src/server/tools/read/get-ci-requirements.ts
+- [x] T060 [US5] Write integration test for CI requirements tool
 
 **Checkpoint**: AI can query CI/CD standards
 
@@ -200,9 +200,9 @@
 
 ### Implementation for User Story 6
 
-- [ ] T061 [US6] Implement getObservabilityRequirements() in architecture-store.ts
-- [ ] T062 [US6] Implement get_observability_requirements MCP tool in src/server/tools/read/get-observability-requirements.ts
-- [ ] T063 [US6] Write integration test for observability requirements tool
+- [x] T061 [US6] Implement getObservabilityRequirements() in architecture-store.ts
+- [x] T062 [US6] Implement get_observability_requirements MCP tool in src/server/tools/read/get-observability-requirements.ts
+- [x] T063 [US6] Write integration test for observability requirements tool
 
 **Checkpoint**: AI can query observability standards
 
@@ -214,12 +214,12 @@
 
 ### Implementation
 
-- [ ] T064 Set up MCP server using SDK in src/server/index.ts
-- [ ] T065 [P] Implement logging middleware in src/server/middleware/logging.ts
-- [ ] T066 [P] Implement error handling middleware in src/server/middleware/error-handling.ts
-- [ ] T067 Register all read tools with MCP server
-- [ ] T068 Configure server metadata and capabilities
-- [ ] T069 Write end-to-end test: start server, query all tools
+- [x] T064 Set up MCP server using SDK in src/server/index.ts
+- [x] T065 [P] Implement logging middleware in src/server/middleware/logging.ts
+- [x] T066 [P] Implement error handling middleware in src/server/middleware/error-handling.ts
+- [x] T067 Register all read tools with MCP server
+- [x] T068 Configure server metadata and capabilities
+- [x] T069 Write end-to-end test: start server, query all tools
 
 **Checkpoint**: MCP server starts and responds to all tools
 
@@ -231,14 +231,14 @@
 
 ### Implementation
 
-- [ ] T070 Set up Commander.js CLI in src/cli/index.ts
-- [ ] T071 Implement MCP client connection utility
-- [ ] T072 [P] Create output formatters (JSON, YAML, table) in src/cli/utils/
-- [ ] T073 Implement `arch context service <name> --env <env>` command
-- [ ] T074 Implement `arch context env <name>` command
-- [ ] T075 Implement `arch validate` command (basic schema validation)
-- [ ] T076 Add help text and examples to all commands
-- [ ] T077 Write CLI integration tests
+- [x] T070 Set up Commander.js CLI in src/cli/index.ts
+- [x] T071 Implement MCP client connection utility
+- [x] T072 [P] Create output formatters (JSON, YAML, table) in src/cli/utils/
+- [x] T073 Implement `arch context service <name> --env <env>` command
+- [x] T074 Implement `arch context env <name>` command
+- [x] T075 Implement `arch validate` command (basic schema validation)
+- [x] T076 Add help text and examples to all commands
+- [x] T077 Write CLI integration tests
 
 **Checkpoint**: CLI can init repos and query context using MCP API
 
@@ -248,12 +248,12 @@
 
 **Purpose**: Final polish, documentation, and verification
 
-- [ ] T078 [P] Update README with usage examples
-- [ ] T079 [P] Create example architecture in tests/fixtures/architecture/
-- [ ] T080 Run full test suite and fix failures
-- [ ] T081 Verify <100ms response time for all read operations
-- [ ] T082 Test MCP server with Claude Code integration
-- [ ] T083 Verify all success criteria from spec.md
+- [x] T078 [P] Update README with usage examples
+- [x] T079 [P] Create example architecture in tests/fixtures/architecture/
+- [x] T080 Run full test suite and fix failures
+- [x] T081 Verify <100ms response time for all read operations
+- [x] T082 Test MCP server with Claude Code integration
+- [x] T083 Verify all success criteria from spec.md
 
 ---
 

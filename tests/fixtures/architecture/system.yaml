@@ -1,0 +1,29 @@
+name: ecommerce-platform
+description: Cloud-native e-commerce platform built on microservices
+schemaVersion: "1.0.0"
+
+architecture:
+  style: microservices
+  cloud: aws
+  region: us-east-1
+
+defaults:
+  region: us-east-1
+  runtime:
+    language: typescript
+    version: "20"
+    framework: express
+    packageManager: npm
+  tags:
+    project: ecommerce-platform
+    managed-by: arkiteckt
+
+repository:
+  type: monorepo
+  provider: github
+  defaultBranch: main
+
+team:
+  name: platform-engineering
+  email: platform@example.com
+  slack: "#platform-eng"

@@ -20,4 +20,5 @@ export {
   ArchitectureStore,
   type IArchitectureStore,
   type ArchitectureStoreOptions,
+  type InitResult,
 } from './architecture-store.js';

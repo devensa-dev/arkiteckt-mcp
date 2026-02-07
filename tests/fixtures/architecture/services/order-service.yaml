@@ -1,0 +1,71 @@
+name: order-service
+description: Handles order processing, payment orchestration, and fulfillment
+type: backend
+
+runtime:
+  language: typescript
+  version: "20"
+  framework: express
+  entrypoint: src/main.ts
+
+deployment:
+  pattern: ecs_fargate
+  replicas: 2
+  strategy: rolling
+  autoScaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 8
+    targetCPU: 70
+
+container:
+  image: ecr.aws/ecommerce/order-service
+  port: 3000
+  healthCheck:
+    path: /health
+    interval: 30
+    timeout: 5
+    retries: 3
+  resources:
+    cpu: "512"
+    memory: "1Gi"
+
+dependencies:
+  - name: user-service
+    type: sync
+    protocol: http
+  - name: payment-service
+    type: async
+    protocol: amqp
+  - name: inventory-service
+    type: sync
+    protocol: grpc
+
+resilience:
+  circuitBreaker:
+    enabled: true
+    threshold: 5
+    timeout: 30000
+  retry:
+    enabled: true
+    maxAttempts: 3
+    backoff: exponential
+  timeout: 5000
+
+observability:
+  profile: standard
+  slo:
+    availability: 99.9
+    latencyP50: 100
+    latencyP99: 500
+    errorRate: 0.1
+
+environments:
+  prod:
+    deployment:
+      replicas: 5
+      autoScaling:
+        minReplicas: 5
+        maxReplicas: 20
+
+owner: orders-team

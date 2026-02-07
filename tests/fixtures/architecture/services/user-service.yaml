@@ -1,0 +1,35 @@
+name: user-service
+description: User authentication, authorization, and profile management
+type: api
+
+runtime:
+  language: typescript
+  version: "20"
+  framework: express
+  entrypoint: src/main.ts
+
+deployment:
+  pattern: lambda
+  strategy: rolling
+
+dependencies:
+  - name: notification-service
+    type: async
+    protocol: amqp
+
+resilience:
+  circuitBreaker:
+    enabled: true
+    threshold: 3
+    timeout: 10000
+  timeout: 3000
+
+observability:
+  profile: standard
+  slo:
+    availability: 99.95
+    latencyP50: 50
+    latencyP99: 200
+    errorRate: 0.05
+
+owner: identity-team

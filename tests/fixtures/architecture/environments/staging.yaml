@@ -1,0 +1,38 @@
+name: staging
+description: Pre-production environment mirroring prod configuration
+stage: staging
+isProduction: false
+
+availability:
+  replicas: 2
+  multiAZ: true
+
+scaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPU: 70
+
+security:
+  level: standard
+  network:
+    privateOnly: true
+  authentication:
+    required: true
+
+resources:
+  cpu:
+    default: "512"
+    max: "1000"
+  memory:
+    default: "1Gi"
+    max: "2Gi"
+
+features:
+  debug-mode: false
+  hot-reload: false
+  mock-payments: false
+
+variables:
+  LOG_LEVEL: info
+  NODE_ENV: staging
