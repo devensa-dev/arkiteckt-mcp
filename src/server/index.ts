@@ -37,6 +37,30 @@ import {
   createServiceTool,
   formatCreateServiceResult,
   type CreateServiceInput,
+  updateService,
+  updateServiceTool,
+  formatUpdateServiceResult,
+  type UpdateServiceInput,
+  updateSystem,
+  updateSystemTool,
+  formatUpdateSystemResult,
+  type UpdateSystemInput,
+  createEnvironment,
+  createEnvironmentTool,
+  formatCreateEnvironmentResult,
+  type CreateEnvironmentInput,
+  updateEnvironment,
+  updateEnvironmentTool,
+  formatUpdateEnvironmentResult,
+  type UpdateEnvironmentInput,
+  setCICD,
+  setCICDTool,
+  formatSetCICDResult,
+  type SetCICDInput,
+  setObservability,
+  setObservabilityTool,
+  formatSetObservabilityResult,
+  type SetObservabilityInput,
 } from './tools/index.js';
 
 import { createLogger } from './middleware/logging.js';
@@ -161,6 +185,90 @@ export function createServer(baseDir: string): McpServer {
     )
   );
 
+  // update_service (name, updates)
+  server.registerTool(
+    updateServiceTool.name,
+    updateServiceTool.config,
+    withErrorHandling(
+      updateServiceTool.name,
+      async (args) => {
+        const response = await updateService(args as UpdateServiceInput, options);
+        return formatUpdateServiceResult(response);
+      },
+      logger
+    )
+  );
+
+  // update_system (updates)
+  server.registerTool(
+    updateSystemTool.name,
+    updateSystemTool.config,
+    withErrorHandling(
+      updateSystemTool.name,
+      async (args) => {
+        const response = await updateSystem(args as UpdateSystemInput, options);
+        return formatUpdateSystemResult(response);
+      },
+      logger
+    )
+  );
+
+  // create_environment (name, base_template?, availability?, scaling?, security_level?)
+  server.registerTool(
+    createEnvironmentTool.name,
+    createEnvironmentTool.config,
+    withErrorHandling(
+      createEnvironmentTool.name,
+      async (args) => {
+        const response = await createEnvironment(args as CreateEnvironmentInput, options);
+        return formatCreateEnvironmentResult(response);
+      },
+      logger
+    )
+  );
+
+  // update_environment (name, updates)
+  server.registerTool(
+    updateEnvironmentTool.name,
+    updateEnvironmentTool.config,
+    withErrorHandling(
+      updateEnvironmentTool.name,
+      async (args) => {
+        const response = await updateEnvironment(args as UpdateEnvironmentInput, options);
+        return formatUpdateEnvironmentResult(response);
+      },
+      logger
+    )
+  );
+
+  // set_cicd (provider?, steps?, quality_gates?, config?)
+  server.registerTool(
+    setCICDTool.name,
+    setCICDTool.config,
+    withErrorHandling(
+      setCICDTool.name,
+      async (args) => {
+        const response = await setCICD(args as SetCICDInput, options);
+        return formatSetCICDResult(response);
+      },
+      logger
+    )
+  );
+
+  // set_observability (logging?, metrics?, tracing?, alerting?, config?)
+  server.registerTool(
+    setObservabilityTool.name,
+    setObservabilityTool.config,
+    withErrorHandling(
+      setObservabilityTool.name,
+      async (args) => {
+        const response = await setObservability(args as SetObservabilityInput, options);
+        return formatSetObservabilityResult(response);
+      },
+      logger
+    )
+  );
+
   // T068: Server metadata and capabilities are configured via
   // the McpServer constructor (name, version) and tool registrations above.
 
@@ -175,6 +283,12 @@ export function createServer(baseDir: string): McpServer {
       getObservabilityRequirementsTool.name,
       getCapabilityRequirementsTool.name,
       createServiceTool.name,
+      updateServiceTool.name,
+      updateSystemTool.name,
+      createEnvironmentTool.name,
+      updateEnvironmentTool.name,
+      setCICDTool.name,
+      setObservabilityTool.name,
     ],
   });
 

@@ -5,6 +5,7 @@
  * All write tools perform validation before modifying files and return impact analysis.
  */
 
+// Service Tools
 export {
   createService,
   createServiceTool,
@@ -12,3 +13,55 @@ export {
   type CreateServiceInput,
   type CreateServiceOptions,
 } from './create-service.js';
+
+export {
+  updateService,
+  updateServiceTool,
+  formatMcpResult as formatUpdateServiceResult,
+  type UpdateServiceInput,
+  type UpdateServiceOptions,
+} from './update-service.js';
+
+// System Tools
+export {
+  updateSystem,
+  updateSystemTool,
+  formatMcpResult as formatUpdateSystemResult,
+  type UpdateSystemInput,
+  type UpdateSystemOptions,
+} from './update-system.js';
+
+// Environment Tools
+export {
+  createEnvironment,
+  createEnvironmentTool,
+  formatMcpResult as formatCreateEnvironmentResult,
+  type CreateEnvironmentInput,
+  type CreateEnvironmentOptions,
+} from './create-environment.js';
+
+export {
+  updateEnvironment,
+  updateEnvironmentTool,
+  formatMcpResult as formatUpdateEnvironmentResult,
+  type UpdateEnvironmentInput,
+  type UpdateEnvironmentOptions,
+} from './update-environment.js';
+
+// CI/CD Tools
+export {
+  setCICD,
+  setCICDTool,
+  formatMcpResult as formatSetCICDResult,
+  type SetCICDInput,
+  type SetCICDOptions,
+} from './set-cicd.js';
+
+// Observability Tools
+export {
+  setObservability,
+  setObservabilityTool,
+  formatMcpResult as formatSetObservabilityResult,
+  type SetObservabilityInput,
+  type SetObservabilityOptions,
+} from './set-observability.js';

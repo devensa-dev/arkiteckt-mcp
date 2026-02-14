@@ -88,21 +88,21 @@
 
 ### Implementation
 
-- [ ] T024 [P] Create `update-service` write tool in `src/server/tools/write/update-service.ts` — define tool config (name: `update_service`, inputSchema with name, updates record), handler calling `store.updateService()` + `impactAnalyzer.analyzeDeploymentPatternChange()` when pattern changes, `formatMcpResult()` per write-tools.md
-- [ ] T025 [P] Create `update-system` write tool in `src/server/tools/write/update-system.ts` — define tool config (name: `update_system`, inputSchema with updates record), handler calling `store.updateSystem()` + `impactAnalyzer.analyzeSystemDefaultsChange()`, `formatMcpResult()` per write-tools.md
-- [ ] T026 [P] Create `create-environment` write tool in `src/server/tools/write/create-environment.ts` — define tool config (name: `create_environment`, inputSchema with name, base_template?, availability?, scaling?, security_level?), handler calling `store.createEnvironment()`, `formatMcpResult()` per write-tools.md
-- [ ] T027 [P] Create `update-environment` write tool in `src/server/tools/write/update-environment.ts` — define tool config (name: `update_environment`, inputSchema with name, updates record), handler calling `store.updateEnvironment()`, `formatMcpResult()`
-- [ ] T028 [P] Create `set-cicd` write tool in `src/server/tools/write/set-cicd.ts` — define tool config (name: `set_cicd`, inputSchema with provider?, steps?, quality_gates?, config?), handler calling `store.setCICD()`, `formatMcpResult()` per write-tools.md
-- [ ] T029 [P] Create `set-observability` write tool in `src/server/tools/write/set-observability.ts` — define tool config (name: `set_observability`, inputSchema with logging?, metrics?, tracing?, alerting?, config?), handler calling `store.setObservability()`, `formatMcpResult()` per write-tools.md
-- [ ] T030 Register all update/create tools (T024-T029) in `src/server/index.ts`
-- [ ] T031 Update `src/server/tools/write/index.ts` to export all new write tools
+- [x] T024 [P] Create `update-service` write tool in `src/server/tools/write/update-service.ts` — define tool config (name: `update_service`, inputSchema with name, updates record), handler calling `store.updateService()` + `impactAnalyzer.analyzeDeploymentPatternChange()` when pattern changes, `formatMcpResult()` per write-tools.md
+- [x] T025 [P] Create `update-system` write tool in `src/server/tools/write/update-system.ts` — define tool config (name: `update_system`, inputSchema with updates record), handler calling `store.updateSystem()` + `impactAnalyzer.analyzeSystemDefaultsChange()`, `formatMcpResult()` per write-tools.md
+- [x] T026 [P] Create `create-environment` write tool in `src/server/tools/write/create-environment.ts` — define tool config (name: `create_environment`, inputSchema with name, base_template?, availability?, scaling?, security_level?), handler calling `store.createEnvironment()`, `formatMcpResult()` per write-tools.md
+- [x] T027 [P] Create `update-environment` write tool in `src/server/tools/write/update-environment.ts` — define tool config (name: `update_environment`, inputSchema with name, updates record), handler calling `store.updateEnvironment()`, `formatMcpResult()`
+- [x] T028 [P] Create `set-cicd` write tool in `src/server/tools/write/set-cicd.ts` — define tool config (name: `set_cicd`, inputSchema with provider?, steps?, quality_gates?, config?), handler calling `store.setCICD()`, `formatMcpResult()` per write-tools.md
+- [x] T029 [P] Create `set-observability` write tool in `src/server/tools/write/set-observability.ts` — define tool config (name: `set_observability`, inputSchema with logging?, metrics?, tracing?, alerting?, config?), handler calling `store.setObservability()`, `formatMcpResult()` per write-tools.md
+- [x] T030 Register all update/create tools (T024-T029) in `src/server/index.ts`
+- [x] T031 Update `src/server/tools/write/index.ts` to export all new write tools
 
 ### Tests
 
-- [ ] T032 [P] Integration test for update_service in `tests/integration/tools/write/update-service.test.ts` — test deep-merge preserving fields, array replace, deployment pattern change with artifact delta, cycle detection rejection, not-found error (404)
-- [ ] T033 [P] Integration test for update_system in `tests/integration/tools/write/update-system.test.ts` — test defaults change with affected services list, schema validation
-- [ ] T034 [P] Integration test for environment tools in `tests/integration/tools/write/environment-tools.test.ts` — test create with base_template defaults, update with merge, duplicate rejection
-- [ ] T035 [P] Integration test for set_cicd and set_observability in `tests/integration/tools/write/upsert-tools.test.ts` — test create-or-update behavior, schema validation
+- [x] T032 [P] Integration test for update_service in `tests/integration/tools/write/update-service.test.ts` — test deep-merge preserving fields, array replace, deployment pattern change with artifact delta, cycle detection rejection, not-found error (404)
+- [x] T033 [P] Integration test for update_system in `tests/integration/tools/write/update-system.test.ts` — test defaults change with affected services list, schema validation
+- [x] T034 [P] Integration test for environment tools in `tests/integration/tools/write/environment-tools.test.ts` — test create with base_template defaults, update with merge, duplicate rejection
+- [x] T035 [P] Integration test for set_cicd and set_observability in `tests/integration/tools/write/upsert-tools.test.ts` — test create-or-update behavior, schema validation
 
 **Checkpoint**: All entity write tools functional — full CRUD for services and environments, system updates, CI/CD and observability upserts
 
