@@ -17,12 +17,12 @@
 
 **Purpose**: New type definitions and utility classes that all phases depend on
 
-- [ ] T001 [P] Create `WriteResponse<T>`, `DeleteResponse`, and `ImpactAnalysis` types in `src/core/schemas/write-responses.schema.ts` — define Zod schemas and inferred TypeScript types for all write operation responses (WriteResponse, DeleteResponse, ImpactAnalysis, ServiceImpact, FieldChange, ArtifactsDelta) per data-model.md
-- [ ] T002 [P] Create YAML serializer utility in `src/core/store/yaml-serializer.ts` — thin wrapper around existing `stringifyYaml()` from `src/shared/utils/yaml.ts` adding `writeYamlFile(filePath, data)` with directory creation, consistent formatting (2-space indent, block style, sorted keys), and `deleteYamlFile(filePath)` per R1
-- [ ] T003 [P] Create `ScanResult`, `DetectedService`, `DetectedDependency`, `DetectedCICD`, `DetectedObservability`, `DetectedSystem` types in `src/core/schemas/scan-result.schema.ts` per data-model.md
-- [ ] T004 [P] Create `WorkflowStep`, `ScaffoldResponse`, `ReadinessReport`, `ArtifactCheck` types in `src/core/schemas/scaffold-responses.schema.ts` per data-model.md
-- [ ] T005 [P] Create `ValidationReport`, `ValidationIssue`, `EnvironmentDiff`, `FieldDiff`, `MigrationGuide`, `MigrationStep`, `BreakingChange` types in `src/core/schemas/analysis-responses.schema.ts` per data-model.md
-- [ ] T006 Update `src/core/schemas/index.ts` to export all new schema files (T001, T003, T004, T005)
+- [x] T001 [P] Create `WriteResponse<T>`, `DeleteResponse`, and `ImpactAnalysis` types in `src/core/schemas/write-responses.schema.ts` — define Zod schemas and inferred TypeScript types for all write operation responses (WriteResponse, DeleteResponse, ImpactAnalysis, ServiceImpact, FieldChange, ArtifactsDelta) per data-model.md
+- [x] T002 [P] Create YAML serializer utility in `src/core/store/yaml-serializer.ts` — thin wrapper around existing `stringifyYaml()` from `src/shared/utils/yaml.ts` adding `writeYamlFile(filePath, data)` with directory creation, consistent formatting (2-space indent, block style, sorted keys), and `deleteYamlFile(filePath)` per R1
+- [x] T003 [P] Create `ScanResult`, `DetectedService`, `DetectedDependency`, `DetectedCICD`, `DetectedObservability`, `DetectedSystem` types in `src/core/schemas/scan-result.schema.ts` per data-model.md
+- [x] T004 [P] Create `WorkflowStep`, `ScaffoldResponse`, `ReadinessReport`, `ArtifactCheck` types in `src/core/schemas/scaffold-responses.schema.ts` per data-model.md
+- [x] T005 [P] Create `ValidationReport`, `ValidationIssue`, `EnvironmentDiff`, `FieldDiff`, `MigrationGuide`, `MigrationStep`, `BreakingChange` types in `src/core/schemas/analysis-responses.schema.ts` per data-model.md
+- [x] T006 Update `src/core/schemas/index.ts` to export all new schema files (T001, T003, T004, T005)
 
 **Checkpoint**: All shared types defined — store write layer can begin
 
@@ -36,25 +36,25 @@
 
 ### Store Write Methods
 
-- [ ] T007 Add `createService(name, config)` method to `src/core/store/architecture-store.ts` — check name uniqueness (FR-004), validate config against ServiceSchema (FR-003), write minimal overrides only (FR-002) via YamlSerializer, invalidate cache `service:{name}` and `service:__all__` (FR-010), return `Result<Service, ArchitectureError>`
-- [ ] T008 Add `updateService(name, updates)` method to `src/core/store/architecture-store.ts` — read existing config, deep-merge with `arrayStrategy: 'replace'` (FR-005), run cycle detection on new dependencies via `wouldCreateCycle()` (FR-006), validate merged config, write via YamlSerializer, invalidate cache, return `Result<Service, ArchitectureError>`
-- [ ] T009 Add `deleteService(name, force?)` method to `src/core/store/architecture-store.ts` — check for dependents via `buildDependencyGraph()` (FR-007), block if has dependents and `force=false`, delete file via YamlSerializer, invalidate cache, return `Result<void, ArchitectureError>` with warnings if forced
-- [ ] T010 Add `createEnvironment(name, config)` method to `src/core/store/architecture-store.ts` — check name uniqueness, validate against EnvironmentSchema (FR-003), write via YamlSerializer, invalidate cache, return `Result<Environment, ArchitectureError>`
-- [ ] T011 [P] Add `updateEnvironment(name, updates)` method to `src/core/store/architecture-store.ts` — read existing, deep-merge with `arrayStrategy: 'replace'`, validate, write, invalidate cache
-- [ ] T012 [P] Add `deleteEnvironment(name)` method to `src/core/store/architecture-store.ts` — scan services for orphaned environment overrides (FR-008), delete file, invalidate cache, return warnings about orphaned `service.environments.{name}` sections
-- [ ] T013 [P] Add `updateSystem(updates)` method to `src/core/store/architecture-store.ts` — read existing system.yaml, deep-merge, validate against SystemSchema, write, invalidate all caches (system defaults affect everything)
-- [ ] T014 [P] Add `setCICD(config)` method to `src/core/store/architecture-store.ts` — upsert behavior: create if not exists, deep-merge if exists (FR-009), validate against CICDSchema, write, invalidate cache
-- [ ] T015 [P] Add `setObservability(config)` method to `src/core/store/architecture-store.ts` — upsert behavior: create if not exists, deep-merge if exists (FR-009), validate against ObservabilitySchema, write, invalidate cache
+- [x] T007 Add `createService(name, config)` method to `src/core/store/architecture-store.ts` — check name uniqueness (FR-004), validate config against ServiceSchema (FR-003), write minimal overrides only (FR-002) via YamlSerializer, invalidate cache `service:{name}` and `service:__all__` (FR-010), return `Result<Service, ArchitectureError>`
+- [x] T008 Add `updateService(name, updates)` method to `src/core/store/architecture-store.ts` — read existing config, deep-merge with `arrayStrategy: 'replace'` (FR-005), run cycle detection on new dependencies via `wouldCreateCycle()` (FR-006), validate merged config, write via YamlSerializer, invalidate cache, return `Result<Service, ArchitectureError>`
+- [x] T009 Add `deleteService(name, force?)` method to `src/core/store/architecture-store.ts` — check for dependents via `buildDependencyGraph()` (FR-007), block if has dependents and `force=false`, delete file via YamlSerializer, invalidate cache, return `Result<void, ArchitectureError>` with warnings if forced
+- [x] T010 Add `createEnvironment(name, config)` method to `src/core/store/architecture-store.ts` — check name uniqueness, validate against EnvironmentSchema (FR-003), write via YamlSerializer, invalidate cache, return `Result<Environment, ArchitectureError>`
+- [x] T011 [P] Add `updateEnvironment(name, updates)` method to `src/core/store/architecture-store.ts` — read existing, deep-merge with `arrayStrategy: 'replace'`, validate, write, invalidate cache
+- [x] T012 [P] Add `deleteEnvironment(name)` method to `src/core/store/architecture-store.ts` — scan services for orphaned environment overrides (FR-008), delete file, invalidate cache, return warnings about orphaned `service.environments.{name}` sections
+- [x] T013 [P] Add `updateSystem(updates)` method to `src/core/store/architecture-store.ts` — read existing system.yaml, deep-merge, validate against SystemSchema, write, invalidate all caches (system defaults affect everything)
+- [x] T014 [P] Add `setCICD(config)` method to `src/core/store/architecture-store.ts` — upsert behavior: create if not exists, deep-merge if exists (FR-009), validate against CICDSchema, write, invalidate cache
+- [x] T015 [P] Add `setObservability(config)` method to `src/core/store/architecture-store.ts` — upsert behavior: create if not exists, deep-merge if exists (FR-009), validate against ObservabilitySchema, write, invalidate cache
 
 ### Impact Analysis Engine
 
-- [ ] T016 Create `ImpactAnalyzer` class in `src/core/engines/impact-analyzer.ts` — implements `analyzeServiceDeletion(name)`, `analyzeSystemDefaultsChange(oldDefaults, newDefaults)`, `analyzeDeploymentPatternChange(service, oldPattern, newPattern)`, `analyzeEnvironmentDeletion(name)` per R4, uses ArchitectureStore to scan for dependencies and overrides
-- [ ] T017 Update `src/core/engines/index.ts` to export `ImpactAnalyzer`
+- [x] T016 Create `ImpactAnalyzer` class in `src/core/engines/impact-analyzer.ts` — implements `analyzeServiceDeletion(name)`, `analyzeSystemDefaultsChange(oldDefaults, newDefaults)`, `analyzeDeploymentPatternChange(service, oldPattern, newPattern)`, `analyzeEnvironmentDeletion(name)` per R4, uses ArchitectureStore to scan for dependencies and overrides
+- [x] T017 Update `src/core/engines/index.ts` to export `ImpactAnalyzer`
 
 ### Store Write Tests
 
-- [ ] T018 Unit tests for store write operations in `tests/unit/store/write-operations.test.ts` — test createService (happy path, duplicate name, validation failure, minimal overrides only), updateService (merge, array replace, cycle detection), deleteService (with/without dependents, force), create/update/delete environment, updateSystem, setCICD, setObservability with temp directories and fixture YAML files
-- [ ] T019 [P] Unit tests for impact analyzer in `tests/unit/engines/impact-analyzer.test.ts` — test deletion analysis (dependents found/not found), system defaults change (affected services identified), pattern change (artifact delta computed), environment deletion (orphaned overrides detected)
+- [x] T018 Unit tests for store write operations in `tests/unit/store/write-operations.test.ts` — test createService (happy path, duplicate name, validation failure, minimal overrides only), updateService (merge, array replace, cycle detection), deleteService (with/without dependents, force), create/update/delete environment, updateSystem, setCICD, setObservability with temp directories and fixture YAML files
+- [x] T019 [P] Unit tests for impact analyzer in `tests/unit/engines/impact-analyzer.test.ts` — test deletion analysis (dependents found/not found), system defaults change (affected services identified), pattern change (artifact delta computed), environment deletion (orphaned overrides detected)
 
 **Checkpoint**: Store write layer complete — all write tools can now build on top of this
 

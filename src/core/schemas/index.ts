@@ -202,3 +202,67 @@ export {
   type Capability,
   type CapabilitySet,
 } from './capability.schema.js';
+
+// Write Response Schemas
+export {
+  FieldChangeSchema,
+  ServiceImpactSchema,
+  ArtifactsDeltaSchema,
+  ImpactAnalysisSchema,
+  WriteResponseSchema,
+  DeleteResponseSchema,
+  type FieldChange,
+  type ServiceImpact,
+  type ArtifactsDelta,
+  type ImpactAnalysis,
+  type WriteResponse,
+  type DeleteResponse,
+} from './write-responses.schema.js';
+
+// Scan Result Schemas
+export {
+  DetectedDependencySchema,
+  DetectedServiceSchema,
+  DetectedCICDSchema,
+  DetectedObservabilitySchema,
+  DetectedSystemSchema,
+  ScanWrittenFilesSchema,
+  ScanResultSchema,
+  type DetectedDependency,
+  type DetectedService,
+  type DetectedCICD,
+  type DetectedObservability,
+  type DetectedSystem,
+  type ScanWrittenFiles,
+  type ScanResult,
+} from './scan-result.schema.js';
+
+// Scaffold Response Schemas
+export {
+  WorkflowStepSchema,
+  ScaffoldResponseSchema,
+  ArtifactCheckSchema,
+  ReadinessReportSchema,
+  type WorkflowStep,
+  type ScaffoldResponse,
+  type ArtifactCheck,
+  type ReadinessReport,
+} from './scaffold-responses.schema.js';
+
+// Analysis Response Schemas
+export {
+  ValidationIssueSchema,
+  ValidationReportSchema,
+  FieldDiffSchema,
+  EnvironmentDiffSchema,
+  MigrationStepSchema,
+  BreakingChangeSchema,
+  MigrationGuideSchema,
+  type ValidationIssue,
+  type ValidationReport,
+  type FieldDiff,
+  type EnvironmentDiff,
+  type MigrationStep,
+  type BreakingChange,
+  type MigrationGuide,
+} from './analysis-responses.schema.js';

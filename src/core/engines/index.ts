@@ -17,3 +17,8 @@ export {
   wouldCreateCycle,
   type CycleDetectionResult,
 } from './cycle-detector.js';
+export {
+  ImpactAnalyzer,
+  type ServiceDeletionAnalysis,
+  type EnvironmentDeletionAnalysis,
+} from './impact-analyzer.js';

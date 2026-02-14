@@ -265,4 +265,32 @@ export type {
   PatternArtifacts,
   CapabilityInput,
   ValidationStep,
+  // Write Responses
+  FieldChange,
+  ServiceImpact,
+  ArtifactsDelta,
+  ImpactAnalysis,
+  WriteResponse,
+  DeleteResponse,
+  // Scan Results
+  DetectedDependency,
+  DetectedService,
+  DetectedCICD,
+  DetectedObservability,
+  DetectedSystem,
+  ScanWrittenFiles,
+  ScanResult,
+  // Scaffold Responses
+  WorkflowStep,
+  ScaffoldResponse,
+  ArtifactCheck,
+  ReadinessReport,
+  // Analysis Responses
+  ValidationIssue,
+  ValidationReport,
+  FieldDiff,
+  EnvironmentDiff,
+  MigrationStep,
+  BreakingChange,
+  MigrationGuide,
 } from '../../core/schemas/index.js';
