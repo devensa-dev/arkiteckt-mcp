@@ -7,3 +7,4 @@
 export * from './read/index.js';
 export * from './write/index.js';
 export * from './scan/index.js';
+export * from './scaffold/index.js';

@@ -73,6 +73,10 @@ import {
   scanCodebaseTool,
   formatScanCodebaseResult,
   type ScanCodebaseInput,
+  explainArchitecture,
+  explainArchitectureTool,
+  formatMcpResult as formatExplainArchitectureResult,
+  type ExplainArchitectureInput,
 } from './tools/index.js';
 
 import { createLogger } from './middleware/logging.js';
@@ -323,6 +327,22 @@ export function createServer(baseDir: string): McpServer {
     )
   );
 
+  // --- Register all scaffold tools ---
+
+  // explain_architecture (focus?, service_name?)
+  server.registerTool(
+    explainArchitectureTool.name,
+    explainArchitectureTool.config,
+    withErrorHandling(
+      explainArchitectureTool.name,
+      async (args) => {
+        const response = await explainArchitecture(args as ExplainArchitectureInput, options);
+        return formatExplainArchitectureResult(response);
+      },
+      logger
+    )
+  );
+
   // T068: Server metadata and capabilities are configured via
   // the McpServer constructor (name, version) and tool registrations above.
 
@@ -346,6 +366,7 @@ export function createServer(baseDir: string): McpServer {
       deleteServiceTool.name,
       deleteEnvironmentTool.name,
       scanCodebaseTool.name,
+      explainArchitectureTool.name,
     ],
   });
 

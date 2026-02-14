@@ -168,13 +168,13 @@
 
 ### Implementation
 
-- [ ] T056 Create `explain-architecture` tool in `src/server/tools/scaffold/explain-architecture.ts` — define tool config (name: `explain_architecture`, inputSchema with focus?, service_name?), handler implementing overview mode (system summary, service inventory, dependency graph, tech stack, statistics) and service focus mode (resolved config, direct+transitive deps, env variations, capability checklist, related ADRs) per scaffold-tools.md (FR-018, FR-019, FR-032, FR-033)
-- [ ] T057 Create `src/server/tools/scaffold/index.ts` barrel export
-- [ ] T058 Register `explain_architecture` tool in `src/server/index.ts`
+- [x] T056 Create `explain-architecture` tool in `src/server/tools/scaffold/explain-architecture.ts` — define tool config (name: `explain_architecture`, inputSchema with focus?, service_name?), handler implementing overview mode (system summary, service inventory, dependency graph, tech stack, statistics) and service focus mode (resolved config, direct+transitive deps, env variations, capability checklist, related ADRs) per scaffold-tools.md (FR-018, FR-019, FR-032, FR-033)
+- [x] T057 Create `src/server/tools/scaffold/index.ts` barrel export
+- [x] T058 Register `explain_architecture` tool in `src/server/index.ts`
 
 ### Tests
 
-- [ ] T059 Integration test for explain_architecture in `tests/integration/tools/scaffold/explain-architecture.test.ts` — test overview mode returns complete system summary, service focus mode returns resolved config with dependencies, verify structured format optimized for agent consumption (FR-032)
+- [x] T059 Integration test for explain_architecture in `tests/integration/tools/scaffold/explain-architecture.test.ts` — test overview mode returns complete system summary, service focus mode returns resolved config with dependencies, verify structured format optimized for agent consumption (FR-032)
 
 **Checkpoint**: Agent context loading functional — coding agents can efficiently query architecture
 
