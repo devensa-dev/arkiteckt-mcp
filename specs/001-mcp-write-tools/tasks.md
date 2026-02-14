@@ -216,13 +216,13 @@
 
 ### Implementation
 
-- [ ] T069 Create `diff-environments` tool in `src/server/tools/analysis/diff-environments.ts` — define tool config (name: `diff_environments`, inputSchema with env_a, env_b, service_name?), handler comparing environment configs field-by-field, with optional service-specific resolved config diff (FR-020) per analysis-tools.md
-- [ ] T070 Create `src/server/tools/analysis/index.ts` barrel export
-- [ ] T071 Register `diff_environments` tool in `src/server/index.ts`
+- [X] T069 Create `diff-environments` tool in `src/server/tools/analysis/diff-environments.ts` — define tool config (name: `diff_environments`, inputSchema with env_a, env_b, service_name?), handler comparing environment configs field-by-field, with optional service-specific resolved config diff (FR-020) per analysis-tools.md
+- [X] T070 Create `src/server/tools/analysis/index.ts` barrel export
+- [X] T071 Register `diff_environments` tool in `src/server/index.ts`
 
 ### Tests
 
-- [ ] T072 Integration test for diff_environments in `tests/integration/tools/analysis/diff-environments.test.ts` — test field-level differences detected, onlyIn fields identified, summary generated, service-specific resolved diff mode
+- [X] T072 Integration test for diff_environments in `tests/integration/tools/analysis/diff-environments.test.ts` — test field-level differences detected, onlyIn fields identified, summary generated, service-specific resolved diff mode
 
 **Checkpoint**: Environment comparison functional
 

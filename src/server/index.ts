@@ -85,6 +85,10 @@ import {
   scaffoldEnvironmentTool,
   formatScaffoldEnvironmentResult,
   type ScaffoldEnvironmentInput,
+  diffEnvironments,
+  diffEnvironmentsTool,
+  formatDiffEnvironmentsResult,
+  type DiffEnvironmentsInput,
 } from './tools/index.js';
 
 import { createLogger } from './middleware/logging.js';
@@ -379,6 +383,22 @@ export function createServer(baseDir: string): McpServer {
     )
   );
 
+  // --- Register all analysis tools ---
+
+  // diff_environments (env_a, env_b, service_name?)
+  server.registerTool(
+    diffEnvironmentsTool.name,
+    diffEnvironmentsTool.config,
+    withErrorHandling(
+      diffEnvironmentsTool.name,
+      async (args) => {
+        const response = await diffEnvironments(args as DiffEnvironmentsInput, options);
+        return formatDiffEnvironmentsResult(response);
+      },
+      logger
+    )
+  );
+
   // T068: Server metadata and capabilities are configured via
   // the McpServer constructor (name, version) and tool registrations above.
 
@@ -405,6 +425,7 @@ export function createServer(baseDir: string): McpServer {
       explainArchitectureTool.name,
       scaffoldServiceTool.name,
       scaffoldEnvironmentTool.name,
+      diffEnvironmentsTool.name,
     ],
   });
 
