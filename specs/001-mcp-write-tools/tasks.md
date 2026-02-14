@@ -116,14 +116,14 @@
 
 ### Implementation
 
-- [ ] T036 Create `delete-service` write tool in `src/server/tools/write/delete-service.ts` — define tool config (name: `delete_service`, inputSchema with name, force?), handler calling `store.deleteService()`, `formatMcpResult()` returning `DeleteResponse` per write-tools.md
-- [ ] T037 [P] Create `delete-environment` write tool in `src/server/tools/write/delete-environment.ts` — define tool config (name: `delete_environment`, inputSchema with name), handler calling `store.deleteEnvironment()`, `formatMcpResult()` returning `DeleteResponse` with orphaned config warnings per write-tools.md
-- [ ] T038 Register delete tools (T036-T037) in `src/server/index.ts`
-- [ ] T039 Update `src/server/tools/write/index.ts` to export delete tools
+- [x] T036 Create `delete-service` write tool in `src/server/tools/write/delete-service.ts` — define tool config (name: `delete_service`, inputSchema with name, force?), handler calling `store.deleteService()`, `formatMcpResult()` returning `DeleteResponse` per write-tools.md
+- [x] T037 [P] Create `delete-environment` write tool in `src/server/tools/write/delete-environment.ts` — define tool config (name: `delete_environment`, inputSchema with name), handler calling `store.deleteEnvironment()`, `formatMcpResult()` returning `DeleteResponse` with orphaned config warnings per write-tools.md
+- [x] T038 Register delete tools (T036-T037) in `src/server/index.ts`
+- [x] T039 Update `src/server/tools/write/index.ts` to export delete tools
 
 ### Tests
 
-- [ ] T040 Integration test for delete tools in `tests/integration/tools/write/delete-tools.test.ts` — test delete service with dependents blocked (409), force delete with warnings, delete service with no dependents, not-found (404), delete environment with orphaned override warnings
+- [x] T040 Integration test for delete tools in `tests/integration/tools/write/delete-tools.test.ts` — test delete service with dependents blocked (409), force delete with warnings, delete service with no dependents, not-found (404), delete environment with orphaned override warnings
 
 **Checkpoint**: Full CRUD cycle complete for services and environments
 

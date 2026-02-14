@@ -65,3 +65,20 @@ export {
   type SetObservabilityInput,
   type SetObservabilityOptions,
 } from './set-observability.js';
+
+// Delete Tools
+export {
+  deleteService,
+  deleteServiceTool,
+  formatMcpResult as formatDeleteServiceResult,
+  type DeleteServiceInput,
+  type DeleteServiceOptions,
+} from './delete-service.js';
+
+export {
+  deleteEnvironment,
+  deleteEnvironmentTool,
+  formatMcpResult as formatDeleteEnvironmentResult,
+  type DeleteEnvironmentInput,
+  type DeleteEnvironmentOptions,
+} from './delete-environment.js';

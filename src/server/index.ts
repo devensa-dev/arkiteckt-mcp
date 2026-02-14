@@ -61,6 +61,14 @@ import {
   setObservabilityTool,
   formatSetObservabilityResult,
   type SetObservabilityInput,
+  deleteService,
+  deleteServiceTool,
+  formatDeleteServiceResult,
+  type DeleteServiceInput,
+  deleteEnvironment,
+  deleteEnvironmentTool,
+  formatDeleteEnvironmentResult,
+  type DeleteEnvironmentInput,
 } from './tools/index.js';
 
 import { createLogger } from './middleware/logging.js';
@@ -269,6 +277,34 @@ export function createServer(baseDir: string): McpServer {
     )
   );
 
+  // delete_service (name, force?)
+  server.registerTool(
+    deleteServiceTool.name,
+    deleteServiceTool.config,
+    withErrorHandling(
+      deleteServiceTool.name,
+      async (args) => {
+        const response = await deleteService(args as DeleteServiceInput, options);
+        return formatDeleteServiceResult(response);
+      },
+      logger
+    )
+  );
+
+  // delete_environment (name)
+  server.registerTool(
+    deleteEnvironmentTool.name,
+    deleteEnvironmentTool.config,
+    withErrorHandling(
+      deleteEnvironmentTool.name,
+      async (args) => {
+        const response = await deleteEnvironment(args as DeleteEnvironmentInput, options);
+        return formatDeleteEnvironmentResult(response);
+      },
+      logger
+    )
+  );
+
   // T068: Server metadata and capabilities are configured via
   // the McpServer constructor (name, version) and tool registrations above.
 
@@ -289,6 +325,8 @@ export function createServer(baseDir: string): McpServer {
       updateEnvironmentTool.name,
       setCICDTool.name,
       setObservabilityTool.name,
+      deleteServiceTool.name,
+      deleteEnvironmentTool.name,
     ],
   });
 
