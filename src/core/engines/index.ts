@@ -22,3 +22,4 @@ export {
   type ServiceDeletionAnalysis,
   type EnvironmentDeletionAnalysis,
 } from './impact-analyzer.js';
+export { CodebaseScanner, type ScanOptions } from './codebase-scanner.js';

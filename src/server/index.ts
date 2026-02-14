@@ -69,6 +69,10 @@ import {
   deleteEnvironmentTool,
   formatDeleteEnvironmentResult,
   type DeleteEnvironmentInput,
+  scanCodebase,
+  scanCodebaseTool,
+  formatScanCodebaseResult,
+  type ScanCodebaseInput,
 } from './tools/index.js';
 
 import { createLogger } from './middleware/logging.js';
@@ -305,6 +309,20 @@ export function createServer(baseDir: string): McpServer {
     )
   );
 
+  // scan_codebase (root_path?, write?)
+  server.registerTool(
+    scanCodebaseTool.name,
+    scanCodebaseTool.config,
+    withErrorHandling(
+      scanCodebaseTool.name,
+      async (args) => {
+        const response = await scanCodebase(args as ScanCodebaseInput, { ...options, cwd: process.cwd() });
+        return formatScanCodebaseResult(response);
+      },
+      logger
+    )
+  );
+
   // T068: Server metadata and capabilities are configured via
   // the McpServer constructor (name, version) and tool registrations above.
 
@@ -327,6 +345,7 @@ export function createServer(baseDir: string): McpServer {
       setObservabilityTool.name,
       deleteServiceTool.name,
       deleteEnvironmentTool.name,
+      scanCodebaseTool.name,
     ],
   });
 

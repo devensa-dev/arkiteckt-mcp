@@ -137,24 +137,24 @@
 
 ### Implementation
 
-- [ ] T041 Create `CodebaseScanner` class in `src/core/engines/codebase-scanner.ts` — main scanner orchestrating detectors, computing confidence scores, assembling `ScanResult` per R6
-- [ ] T042 Implement `ServiceDetector` in `src/core/engines/codebase-scanner.ts` — scan for `package.json`, `pom.xml`, `go.mod`, `requirements.txt`, `Cargo.toml`, `build.gradle` to identify service directories (FR-025)
-- [ ] T043 [P] Implement `DeploymentDetector` in `src/core/engines/codebase-scanner.ts` — scan for `Dockerfile`, `serverless.yml`, `k8s/` manifests, `terraform/`, `docker-compose.yml` to infer deployment patterns (FR-026)
-- [ ] T044 [P] Implement `CICDDetector` in `src/core/engines/codebase-scanner.ts` — scan for `.github/workflows/`, `.gitlab-ci.yml`, `Jenkinsfile`, `bitbucket-pipelines.yml` to detect CI/CD provider and pipeline steps (FR-027)
-- [ ] T045 [P] Implement `RuntimeDetector` in `src/core/engines/codebase-scanner.ts` — scan `.nvmrc`, `runtime.txt`, `go.mod` version, `pom.xml` properties, framework detection from dependencies (FR-030)
-- [ ] T046 [P] Implement `ObservabilityDetector` in `src/core/engines/codebase-scanner.ts` — scan for `datadog.yaml`, prometheus configs, OpenTelemetry imports, logging library usage (FR-031)
-- [ ] T047 Implement `DependencyDetector` in `src/core/engines/codebase-scanner.ts` — scan source code for HTTP client calls, message queue references, service discovery patterns referencing other detected services (FR-028). Regex/pattern matching approach (not AST) per R6
-- [ ] T048 Implement monorepo vs polyrepo detection in `CodebaseScanner` — detect `workspaces` in root `package.json`, multiple service directories under common root per scan-tools.md
-- [ ] T049 Implement confidence scoring in `CodebaseScanner` — 1.0 (build+infra+type), 0.8-0.9 (build+infra), 0.6-0.7 (build only), 0.3-0.5 (source only), <0.3 (warning) per scan-tools.md
-- [ ] T050 Create `scan-codebase` tool in `src/server/tools/scan/scan-codebase.ts` — define tool config (name: `scan_codebase`, inputSchema with root_path?, write?), handler calling `CodebaseScanner.scan()`, preview mode (write=false) returns ScanResult, commit mode (write=true) writes YAML files via store methods (FR-029)
-- [ ] T051 Create `src/server/tools/scan/index.ts` barrel export
-- [ ] T052 Register `scan_codebase` tool in `src/server/index.ts`
-- [ ] T053 Update `src/core/engines/index.ts` to export `CodebaseScanner`
+- [x] T041 Create `CodebaseScanner` class in `src/core/engines/codebase-scanner.ts` — main scanner orchestrating detectors, computing confidence scores, assembling `ScanResult` per R6
+- [x] T042 Implement `ServiceDetector` in `src/core/engines/codebase-scanner.ts` — scan for `package.json`, `pom.xml`, `go.mod`, `requirements.txt`, `Cargo.toml`, `build.gradle` to identify service directories (FR-025)
+- [x] T043 [P] Implement `DeploymentDetector` in `src/core/engines/codebase-scanner.ts` — scan for `Dockerfile`, `serverless.yml`, `k8s/` manifests, `terraform/`, `docker-compose.yml` to infer deployment patterns (FR-026)
+- [x] T044 [P] Implement `CICDDetector` in `src/core/engines/codebase-scanner.ts` — scan for `.github/workflows/`, `.gitlab-ci.yml`, `Jenkinsfile`, `bitbucket-pipelines.yml` to detect CI/CD provider and pipeline steps (FR-027)
+- [x] T045 [P] Implement `RuntimeDetector` in `src/core/engines/codebase-scanner.ts` — scan `.nvmrc`, `runtime.txt`, `go.mod` version, `pom.xml` properties, framework detection from dependencies (FR-030)
+- [x] T046 [P] Implement `ObservabilityDetector` in `src/core/engines/codebase-scanner.ts` — scan for `datadog.yaml`, prometheus configs, OpenTelemetry imports, logging library usage (FR-031)
+- [x] T047 Implement `DependencyDetector` in `src/core/engines/codebase-scanner.ts` — scan source code for HTTP client calls, message queue references, service discovery patterns referencing other detected services (FR-028). Regex/pattern matching approach (not AST) per R6
+- [x] T048 Implement monorepo vs polyrepo detection in `CodebaseScanner` — detect `workspaces` in root `package.json`, multiple service directories under common root per scan-tools.md
+- [x] T049 Implement confidence scoring in `CodebaseScanner` — 1.0 (build+infra+type), 0.8-0.9 (build+infra), 0.6-0.7 (build only), 0.3-0.5 (source only), <0.3 (warning) per scan-tools.md
+- [x] T050 Create `scan-codebase` tool in `src/server/tools/scan/scan-codebase.ts` — define tool config (name: `scan_codebase`, inputSchema with root_path?, write?), handler calling `CodebaseScanner.scan()`, preview mode (write=false) returns ScanResult, commit mode (write=true) writes YAML files via store methods (FR-029)
+- [x] T051 Create `src/server/tools/scan/index.ts` barrel export
+- [x] T052 Register `scan_codebase` tool in `src/server/index.ts`
+- [x] T053 Update `src/core/engines/index.ts` to export `CodebaseScanner`
 
 ### Tests
 
-- [ ] T054 Unit tests for codebase scanner in `tests/unit/engines/codebase-scanner.test.ts` — test each detector with mock project structures (temp dirs with fixture files), confidence scoring, monorepo detection, dependency detection across services
-- [ ] T055 [P] Integration test for scan_codebase in `tests/integration/tools/scan/scan-codebase.test.ts` — test scanning a fixture project structure, preview mode returns results without writing, commit mode writes YAML, empty project returns warnings
+- [x] T054 Unit tests for codebase scanner in `tests/unit/engines/codebase-scanner.test.ts` — test each detector with mock project structures (temp dirs with fixture files), confidence scoring, monorepo detection, dependency detection across services
+- [x] T055 [P] Integration test for scan_codebase in `tests/integration/tools/scan/scan-codebase.test.ts` — test scanning a fixture project structure, preview mode returns results without writing, commit mode writes YAML, empty project returns warnings
 
 **Checkpoint**: Codebase scanning functional — existing projects can auto-populate architecture
 
