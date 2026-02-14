@@ -77,6 +77,14 @@ import {
   explainArchitectureTool,
   formatMcpResult as formatExplainArchitectureResult,
   type ExplainArchitectureInput,
+  scaffoldService,
+  scaffoldServiceTool,
+  formatScaffoldServiceResult,
+  type ScaffoldServiceInput,
+  scaffoldEnvironment,
+  scaffoldEnvironmentTool,
+  formatScaffoldEnvironmentResult,
+  type ScaffoldEnvironmentInput,
 } from './tools/index.js';
 
 import { createLogger } from './middleware/logging.js';
@@ -343,6 +351,34 @@ export function createServer(baseDir: string): McpServer {
     )
   );
 
+  // scaffold_service (name, type, deployment_pattern, description?, dependencies?, owner?)
+  server.registerTool(
+    scaffoldServiceTool.name,
+    scaffoldServiceTool.config,
+    withErrorHandling(
+      scaffoldServiceTool.name,
+      async (args) => {
+        const response = await scaffoldService(args as ScaffoldServiceInput, options);
+        return formatScaffoldServiceResult(response);
+      },
+      logger
+    )
+  );
+
+  // scaffold_environment (name, base_template?)
+  server.registerTool(
+    scaffoldEnvironmentTool.name,
+    scaffoldEnvironmentTool.config,
+    withErrorHandling(
+      scaffoldEnvironmentTool.name,
+      async (args) => {
+        const response = await scaffoldEnvironment(args as ScaffoldEnvironmentInput, options);
+        return formatScaffoldEnvironmentResult(response);
+      },
+      logger
+    )
+  );
+
   // T068: Server metadata and capabilities are configured via
   // the McpServer constructor (name, version) and tool registrations above.
 
@@ -367,6 +403,8 @@ export function createServer(baseDir: string): McpServer {
       deleteEnvironmentTool.name,
       scanCodebaseTool.name,
       explainArchitectureTool.name,
+      scaffoldServiceTool.name,
+      scaffoldEnvironmentTool.name,
     ],
   });
 

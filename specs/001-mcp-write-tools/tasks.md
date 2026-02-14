@@ -188,21 +188,21 @@
 
 ### Smart Default Templates (Prerequisite)
 
-- [ ] T060 [P] Create service templates in `src/core/templates/service-templates.ts` — static template objects keyed by deployment pattern (lambda, ecs_fargate, kubernetes, container) with pattern-specific defaults per R7
-- [ ] T061 [P] Create environment templates in `src/core/templates/environment-templates.ts` — static template objects keyed by tier (dev: 1 replica/relaxed, staging: 2 replicas/standard, prod: 3+ replicas/strict/DR) per R7 (FR-017)
-- [ ] T062 [P] Create CI/CD templates in `src/core/templates/cicd-templates.ts` — static template objects keyed by provider (github-actions, gitlab-ci) per R7
+- [x] T060 [P] Create service templates in `src/core/templates/service-templates.ts` — static template objects keyed by deployment pattern (lambda, ecs_fargate, kubernetes, container) with pattern-specific defaults per R7
+- [x] T061 [P] Create environment templates in `src/core/templates/environment-templates.ts` — static template objects keyed by tier (dev: 1 replica/relaxed, staging: 2 replicas/standard, prod: 3+ replicas/strict/DR) per R7 (FR-017)
+- [x] T062 [P] Create CI/CD templates in `src/core/templates/cicd-templates.ts` — static template objects keyed by provider (github-actions, gitlab-ci) per R7
 
 ### Implementation
 
-- [ ] T063 Create `scaffold-service` tool in `src/server/tools/scaffold/scaffold-service.ts` — define tool config (name: `scaffold_service`, inputSchema with name, type, deployment_pattern, description?, dependencies?), handler calling `store.createService()` then assembling workflow from capabilities, CI/CD, observability, environments (FR-014, FR-015, FR-016) per scaffold-tools.md
-- [ ] T064 [P] Create `scaffold-environment` tool in `src/server/tools/scaffold/scaffold-environment.ts` — define tool config (name: `scaffold_environment`, inputSchema with name, base_template?), handler applying environment template defaults, returning environment config + service impacts + infrastructure steps + security checklist per scaffold-tools.md (FR-017)
-- [ ] T065 Register scaffold tools (T063-T064) in `src/server/index.ts`
-- [ ] T066 Update `src/server/tools/scaffold/index.ts` to export scaffold tools
+- [x] T063 Create `scaffold-service` tool in `src/server/tools/scaffold/scaffold-service.ts` — define tool config (name: `scaffold_service`, inputSchema with name, type, deployment_pattern, description?, dependencies?), handler calling `store.createService()` then assembling workflow from capabilities, CI/CD, observability, environments (FR-014, FR-015, FR-016) per scaffold-tools.md
+- [x] T064 [P] Create `scaffold-environment` tool in `src/server/tools/scaffold/scaffold-environment.ts` — define tool config (name: `scaffold_environment`, inputSchema with name, base_template?), handler applying environment template defaults, returning environment config + service impacts + infrastructure steps + security checklist per scaffold-tools.md (FR-017)
+- [x] T065 Register scaffold tools (T063-T064) in `src/server/index.ts`
+- [x] T066 Update `src/server/tools/scaffold/index.ts` to export scaffold tools
 
 ### Tests
 
-- [ ] T067 Integration test for scaffold_service in `tests/integration/tools/scaffold/scaffold-service.test.ts` — test container pattern includes Dockerfile steps, serverless pattern includes Lambda steps, workflow ordered by category, environment notes present where configs vary, flat checklist returned
-- [ ] T068 [P] Integration test for scaffold_environment in `tests/integration/tools/scaffold/scaffold-environment.test.ts` — test base_template applies correct defaults (dev vs prod), service impacts listed, security checklist for strict tier
+- [x] T067 Integration test for scaffold_service in `tests/integration/tools/scaffold/scaffold-service.test.ts` — test container pattern includes Dockerfile steps, serverless pattern includes Lambda steps, workflow ordered by category, environment notes present where configs vary, flat checklist returned
+- [x] T068 [P] Integration test for scaffold_environment in `tests/integration/tools/scaffold/scaffold-environment.test.ts` — test base_template applies correct defaults (dev vs prod), service impacts listed, security checklist for strict tier
 
 **Checkpoint**: Scaffolding complete — guided workflows for services and environments
 
