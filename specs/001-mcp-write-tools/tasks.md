@@ -68,13 +68,13 @@
 
 ### Implementation
 
-- [ ] T020 Create `create-service` write tool in `src/server/tools/write/create-service.ts` — define tool config (name: `create_service`, inputSchema with name, type, deployment_pattern, description?, dependencies?, owner?), handler calling `store.createService()`, `formatMcpResult()` formatter per write-tools.md contract
-- [ ] T021 Create `src/server/tools/write/index.ts` barrel export for write tools
-- [ ] T022 Register `create_service` tool in `src/server/index.ts` using `server.registerTool()` with `withErrorHandling()` wrapper
+- [x] T020 Create `create-service` write tool in `src/server/tools/write/create-service.ts` — define tool config (name: `create_service`, inputSchema with name, type, deployment_pattern, description?, dependencies?, owner?), handler calling `store.createService()`, `formatMcpResult()` formatter per write-tools.md contract
+- [x] T021 Create `src/server/tools/write/index.ts` barrel export for write tools
+- [x] T022 Register `create_service` tool in `src/server/index.ts` using `server.registerTool()` with `withErrorHandling()` wrapper
 
 ### Tests
 
-- [ ] T023 Integration test for create_service in `tests/integration/tools/write/create-service.test.ts` — test creation with minimal overrides, creation with all fields, duplicate name rejection (409), validation failure (400), checklist returned from capabilities, architecture dir not initialized (503)
+- [x] T023 Integration test for create_service in `tests/integration/tools/write/create-service.test.ts` — test creation with minimal overrides, creation with all fields, duplicate name rejection (409), validation failure (400), checklist returned from capabilities, architecture dir not initialized (503)
 
 **Checkpoint**: create_service tool functional — can create services via MCP
 

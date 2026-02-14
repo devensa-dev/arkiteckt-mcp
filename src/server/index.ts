@@ -33,6 +33,10 @@ import {
   getCapabilityRequirementsTool,
   formatCapabilityRequirementsResult,
   type GetCapabilityRequirementsInput,
+  createService,
+  createServiceTool,
+  formatCreateServiceResult,
+  type CreateServiceInput,
 } from './tools/index.js';
 
 import { createLogger } from './middleware/logging.js';
@@ -141,6 +145,22 @@ export function createServer(baseDir: string): McpServer {
     )
   );
 
+  // --- Register all write tools ---
+
+  // create_service (name, type, deployment_pattern, description?, dependencies?, owner?)
+  server.registerTool(
+    createServiceTool.name,
+    createServiceTool.config,
+    withErrorHandling(
+      createServiceTool.name,
+      async (args) => {
+        const response = await createService(args as CreateServiceInput, options);
+        return formatCreateServiceResult(response);
+      },
+      logger
+    )
+  );
+
   // T068: Server metadata and capabilities are configured via
   // the McpServer constructor (name, version) and tool registrations above.
 
@@ -154,6 +174,7 @@ export function createServer(baseDir: string): McpServer {
       getCIRequirementsTool.name,
       getObservabilityRequirementsTool.name,
       getCapabilityRequirementsTool.name,
+      createServiceTool.name,
     ],
   });
 
