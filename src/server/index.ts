@@ -89,6 +89,14 @@ import {
   diffEnvironmentsTool,
   formatDiffEnvironmentsResult,
   type DiffEnvironmentsInput,
+  validateArchitecture,
+  validateArchitectureTool,
+  formatValidateArchitectureResult,
+  type ValidateArchitectureInput,
+  checkReadiness,
+  checkReadinessTool,
+  formatCheckReadinessResult,
+  type CheckReadinessInput,
 } from './tools/index.js';
 
 import { createLogger } from './middleware/logging.js';
@@ -399,6 +407,34 @@ export function createServer(baseDir: string): McpServer {
     )
   );
 
+  // validate_architecture (scope?)
+  server.registerTool(
+    validateArchitectureTool.name,
+    validateArchitectureTool.config,
+    withErrorHandling(
+      validateArchitectureTool.name,
+      async (args) => {
+        const response = await validateArchitecture(args as ValidateArchitectureInput, options);
+        return formatValidateArchitectureResult(response);
+      },
+      logger
+    )
+  );
+
+  // check_service_readiness (service_name, environment?)
+  server.registerTool(
+    checkReadinessTool.name,
+    checkReadinessTool.config,
+    withErrorHandling(
+      checkReadinessTool.name,
+      async (args) => {
+        const response = await checkReadiness(args as CheckReadinessInput, options);
+        return formatCheckReadinessResult(response);
+      },
+      logger
+    )
+  );
+
   // T068: Server metadata and capabilities are configured via
   // the McpServer constructor (name, version) and tool registrations above.
 
@@ -426,6 +462,8 @@ export function createServer(baseDir: string): McpServer {
       scaffoldServiceTool.name,
       scaffoldEnvironmentTool.name,
       diffEnvironmentsTool.name,
+      validateArchitectureTool.name,
+      checkReadinessTool.name,
     ],
   });
 

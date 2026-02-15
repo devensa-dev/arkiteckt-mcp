@@ -11,3 +11,11 @@ export {
   type DiffEnvironmentsInput,
   type DiffEnvironmentsOptions,
 } from './diff-environments.js';
+
+export {
+  validateArchitecture,
+  validateArchitectureTool,
+  formatMcpResult as formatValidateArchitectureResult,
+  type ValidateArchitectureInput,
+  type ValidateArchitectureOptions,
+} from './validate-architecture.js';

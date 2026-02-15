@@ -23,3 +23,11 @@ export {
   type EnvironmentScaffoldResponse,
   type ServiceImpact,
 } from './scaffold-environment.js';
+
+export {
+  checkReadiness,
+  checkReadinessTool,
+  formatMcpResult as formatCheckReadinessResult,
+  type CheckReadinessInput,
+  type CheckReadinessOptions,
+} from './check-readiness.js';

@@ -236,15 +236,15 @@
 
 ### Implementation
 
-- [ ] T073 Create `validate-architecture` tool in `src/server/tools/analysis/validate-architecture.ts` — define tool config (name: `validate_architecture`, inputSchema with scope?), handler performing all 8 validation checks: missing dep refs, cycles, schema validation, env refs, SLO definitions (warning), resilience (info), security consistency, orphaned configs (FR-021) per analysis-tools.md
-- [ ] T074 [P] Create `check-readiness` tool in `src/server/tools/scaffold/check-readiness.ts` — define tool config (name: `check_service_readiness`, inputSchema with service_name, environment?), handler comparing required artifacts (from capabilities for deployment pattern) against existing service, returning readiness score + completed/missing list + recommendations (FR-022) per scaffold-tools.md
-- [ ] T075 Register analysis and readiness tools (T073-T074) in `src/server/index.ts`
-- [ ] T076 Update `src/server/tools/analysis/index.ts` and `src/server/tools/scaffold/index.ts` to export new tools
+- [x] T073 Create `validate-architecture` tool in `src/server/tools/analysis/validate-architecture.ts` — define tool config (name: `validate_architecture`, inputSchema with scope?), handler performing all 8 validation checks: missing dep refs, cycles, schema validation, env refs, SLO definitions (warning), resilience (info), security consistency, orphaned configs (FR-021) per analysis-tools.md
+- [x] T074 [P] Create `check-readiness` tool in `src/server/tools/scaffold/check-readiness.ts` — define tool config (name: `check_service_readiness`, inputSchema with service_name, environment?), handler comparing required artifacts (from capabilities for deployment pattern) against existing service, returning readiness score + completed/missing list + recommendations (FR-022) per scaffold-tools.md
+- [x] T075 Register analysis and readiness tools (T073-T074) in `src/server/index.ts`
+- [x] T076 Update `src/server/tools/analysis/index.ts` and `src/server/tools/scaffold/index.ts` to export new tools
 
 ### Tests
 
-- [ ] T077 Integration test for validate_architecture in `tests/integration/tools/analysis/validate-architecture.test.ts` — test missing dep detection, cycle detection, orphaned config detection, valid architecture returns `valid: true`
-- [ ] T078 [P] Integration test for check_service_readiness in `tests/integration/tools/scaffold/check-readiness.test.ts` — test readiness score calculation, missing artifacts identified, 100% score when all present
+- [x] T077 Integration test for validate_architecture in `tests/integration/tools/analysis/validate-architecture.test.ts` — test missing dep detection, cycle detection, orphaned config detection, valid architecture returns `valid: true`
+- [x] T078 [P] Integration test for check_service_readiness in `tests/integration/tools/scaffold/check-readiness.test.ts` — test readiness score calculation, missing artifacts identified, 100% score when all present
 
 **Checkpoint**: Architecture validation and readiness checks functional
 
